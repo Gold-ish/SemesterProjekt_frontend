@@ -22,11 +22,15 @@ function URLS() {
 		const URL = "https://carolinehoeg.com/semesterprojekt/api/fetch/dogpic";
 		return URL;
 	}
-	function Cat() {
-		const URL = "https://carolinehoeg.com/semesterprojekt/api/fetch/catpic";
+	function Search(title, page) {
+		const URL =
+			"https://carolinehoeg.com/semesterprojekt/api/movies/search/" +
+			title +
+			"/" +
+			page;
 		return URL;
 	}
 
-	return { Login, User, Admin, AdminData, Dog, Cat };
+	return { Login, User, Admin, AdminData, Dog, Search };
 }
 export default new URLS();

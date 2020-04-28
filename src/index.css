@@ -23,6 +23,14 @@ ul.header {
 ul.header li {
 	float: left;
 }
+ul.header li.right {
+	float: right;
+}
+
+ul.header li.search {
+	margin-left: 10%;
+	width: 650px;
+}
 
 ul.header li a {
 	display: block;

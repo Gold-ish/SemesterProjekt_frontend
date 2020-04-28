@@ -1,9 +1,11 @@
 import React from "react";
 import TopTenMovies from "./topTenMovies";
+import facade from "./apiFacade";
 
-export function Home() {
+export function Home({ searchResult }) {
 	return (
 		<div>
+			<p>search: {searchResult}</p>
 			<h2>Top 10 movies right now</h2>
 			<TopTenMovies />
 

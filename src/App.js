@@ -14,6 +14,7 @@ export default function App() {
 	};
 	const [username, setUsername] = useState();
 	const [roles, setRoles] = useState();
+	const [searchResult, setSearchResult] = useState("");
 
 	return (
 		<Router>
@@ -23,10 +24,11 @@ export default function App() {
 					isLoggedIn={isLoggedIn}
 					username={username}
 					roles={roles}
+					setSearchResult={setSearchResult}
 				/>
 				<Switch>
 					<Route exact path="/">
-						<Home />
+						<Home searchResult={searchResult} />
 					</Route>
 					<Route exact path="/user">
 						<User />
