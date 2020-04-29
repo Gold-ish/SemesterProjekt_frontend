@@ -6,7 +6,7 @@ export function Home({ searchResult }) {
 	return (
 		<div>
 			<p>search: {searchResult}</p>
-			<h2>Top 10 movies right now</h2>
+			<h2>Top 10 movies right now!</h2>
 			<TopTenMovies />
 
 			<br />
