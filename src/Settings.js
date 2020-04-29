@@ -19,7 +19,7 @@ function URLS() {
 	}
 
 	function SpecificMovie(id) {
-		const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/tt0076759";
+		const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/" + id;
 		return URL;
 	}
 	function Search(title, page) {

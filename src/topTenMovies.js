@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -19,12 +20,14 @@ const TopTenTable = ({ movies }) => {
 				<tbody>
 					{movies.map(movie => {
 						return (
-							<tr key={movie.imdbID}>
-								<td>{"100%"}</td>
-								<td><img src={movie.Poster} alt={movie.Title} width="200" /></td>
-								<td>{movie.Title}</td>
-								<td>{movie.Year}</td>
-							</tr>
+							
+								<tr key={movie.imdbID}>
+									<td>{"100%"}</td>
+									<NavLink to={`/moviepage/${movie.imdbID}`}><td><img src={movie.Poster} alt={movie.Title} width="200" /></td></NavLink>
+									<td>{movie.Title}</td>
+									<td>{movie.Year}</td>
+								</tr>
+							
 						)
 					}
 					)}

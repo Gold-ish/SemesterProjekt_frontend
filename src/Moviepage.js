@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import facade from "./apiFacade";
 import URLs from "./Settings";
+import {useParams} from "react-router-dom";
 
-export function MoviePage({ movieID }) {
+export function MoviePage() {
+	let { imdbID } = useParams();
 	const [movie, setMovie] = useState("Loading...");
 
 	useEffect(() => {
-		facade.fetchData(URLs.SpecificMovie(movieID)).then((data) => {
+		facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
 			setMovie(data);
 			console.log(data);
 		});

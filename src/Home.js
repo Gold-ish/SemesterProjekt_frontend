@@ -3,8 +3,8 @@ import TopTenMovies from "./topTenMovies";
 import facade from "./apiFacade";
 import URLS from "./Settings";
 
-export function Home({ searchResult }) {
 
+export function Home({ searchResult }) {
 
 	return (
 		<div>

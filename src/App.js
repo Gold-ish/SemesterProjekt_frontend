@@ -5,7 +5,7 @@ import { Home } from "./Home";
 import { Login } from "./Login";
 import { User } from "./User";
 import { Admin } from "./Admin";
-import { MoviePage } from "./MoviePage";
+import { MoviePage } from "./Moviepage";
 import "./App.css";
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
 					<Route exact path="/">
 						<Home searchResult={searchResult} />
 					</Route>
-					<Route exact path="/moviepage">
+					<Route path={`/moviepage/:imdbID`}>
 						<MoviePage />
 					</Route>
 					<Route exact path="/user">
