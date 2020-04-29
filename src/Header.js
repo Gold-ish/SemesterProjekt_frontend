@@ -20,7 +20,6 @@ export function Header({
 	const onChange = (evt) => {
 		evt.preventDefault();
 		setSearch(evt.target.value);
-		console.log(search);
 	};
 	return (
 		<ul className="header">
