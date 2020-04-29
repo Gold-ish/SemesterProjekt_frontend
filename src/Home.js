@@ -9,7 +9,7 @@ export function Home({ searchResult }) {
 	return (
 		<div>
 			<p>search: {searchResult}</p>
-			{(searchResult.length > 0) && (FecthSearchData())}
+			{(searchResult.length > 0) && (FecthSearchData(searchResult))}
 
 			<h2>Top 10 movies right now!</h2>
 
@@ -27,11 +27,11 @@ export function Home({ searchResult }) {
 	);
 }
 
-function FecthSearchData() {
+function FecthSearchData(searchResult) {
 	const [dataFromServer, setDataFromServer] = useState("Loading...");
 	useEffect(() => {
-		facade.fetchData(URLS.Search("star", "1")).then((data) => setDataFromServer(data));
-	}, []);
+		facade.fetchData(URLS.Search(searchResult, "1")).then((data) => setDataFromServer(data));
+	});
 
 	return (
 		<React.Fragment>

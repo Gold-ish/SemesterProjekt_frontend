@@ -23,8 +23,8 @@ const TopTenTable = ({ movies }) => {
 							
 								<tr key={movie.imdbID}>
 									<td>{"100%"}</td>
-									<NavLink to={`/moviepage/${movie.imdbID}`}><td><img src={movie.Poster} alt={movie.Title} width="200" /></td></NavLink>
-									<td>{movie.Title}</td>
+									<td><NavLink to={`/moviepage/${movie.imdbID}`}><img src={movie.Poster} alt={movie.Title} width="200" /></NavLink></td>
+									<td><NavLink to={`/moviepage/${movie.imdbID}`}>{movie.Title}</NavLink></td>
 									<td>{movie.Year}</td>
 								</tr>
 							
