@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import facade from "./apiFacade";
 import URLs from "./Settings";
 
-export function Moviepage({ movieID }) {
+export function MoviePage({ movieID }) {
 	const [movie, setMovie] = useState("Loading...");
 
 	useEffect(() => {
@@ -13,11 +13,13 @@ export function Moviepage({ movieID }) {
 	}, []);
 
 	return (
-		<div className="container">
+		<div>
 			<h3>{movie.Title}</h3>
-			<div className="movieinfo">Year: {movie.Year}</div>
-			<div className="movieposter">
-				<img src={movie.Poster} alt={movie.Title}></img>
+			<div className="container">
+				<div className="movieinfo">Year: {movie.Year}</div>
+				<div className="movieposter">
+					<img src={movie.Poster} alt={movie.Title}></img>
+				</div>
 			</div>
 			<div className="moviescore">90%</div>
 			<div className="movieplot">"movie.plot"</div>
@@ -28,6 +30,7 @@ export function Moviepage({ movieID }) {
 				<div className="review">Review 3 - Skal laves fleksibelt med map</div>
 				<div className="review">Review 4 - Skal laves fleksibelt med map</div>
 			</div>
+
 		</div>
 	);
 }

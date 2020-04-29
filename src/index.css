@@ -29,7 +29,8 @@ ul.header li.right {
 
 ul.header li.search {
 	margin-left: 10%;
-	width: 650px;
+	margin-top: 10px;
+	width: 50%;
 }
 
 ul.header li a {
@@ -61,4 +62,9 @@ td {
 
 tr:nth-child(odd) {
 	background-color: #8fbc8f;
+}
+
+.container {
+	display: flex;
+	justify-content: space-around;
 }
