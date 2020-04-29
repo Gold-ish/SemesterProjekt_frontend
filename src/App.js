@@ -5,6 +5,7 @@ import { Home } from "./Home";
 import { Login } from "./Login";
 import { User } from "./User";
 import { Admin } from "./Admin";
+import { Moviepage } from "./Moviepage";
 import "./App.css";
 
 export default function App() {
@@ -29,6 +30,9 @@ export default function App() {
 				<Switch>
 					<Route exact path="/">
 						<Home searchResult={searchResult} />
+					</Route>
+					<Route exact path="/moviepage">
+						<Moviepage />
 					</Route>
 					<Route exact path="/user">
 						<User />

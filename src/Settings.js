@@ -18,8 +18,8 @@ function URLS() {
 		return URL;
 	}
 
-	function Dog() {
-		const URL = "https://carolinehoeg.com/semesterprojekt/api/fetch/dogpic";
+	function SpecificMovie(id) {
+		const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/tt0076759";
 		return URL;
 	}
 	function Search(title, page) {
@@ -31,6 +31,6 @@ function URLS() {
 		return URL;
 	}
 
-	return { Login, User, Admin, AdminData, Dog, Search };
+	return { Login, User, Admin, AdminData, SpecificMovie, Search };
 }
 export default new URLS();

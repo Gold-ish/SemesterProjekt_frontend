@@ -6,16 +6,20 @@ const TopTenTable = ({ movies }) => {
 			<p>
 				Replace the tbody section with rows generated from the movies endpoint
 			</p>
-			<table className="topTenTable">
+			{/* <table className="topTenTable">
 				<tbody>
-					<tr>
-						<td>Score: %</td>
-						<td>Poster</td>
-						<td>Title</td>
-						<td>Year</td>
-					</tr>
-				</tbody>
-			</table>
+        {movies.map((movie, index) => {
+          return (
+            <tr key={index}>
+              <td>{movie.score}</td>
+              <td>{movie.poster}</td>
+			  <td>{movie.title}</td>
+              <td>{movie.year}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table> */}
 		</div>
 	);
 };
