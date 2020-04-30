@@ -44,6 +44,11 @@ function apiFacade() {
 		return fetch(URL, options).then(handleHttpErrors);
 	};
 
+	const addRating = (URL) => {
+		const options = makeOptions("POST");
+		return fetch(URL, options).then(handleHttpErrors);
+	}
+
 	const makeOptions = (method, addToken, body) => {
 		var opts = {
 			method: method,
@@ -68,6 +73,7 @@ function apiFacade() {
 		login,
 		logout,
 		fetchData,
+		addRating
 	};
 }
 const facade = apiFacade();

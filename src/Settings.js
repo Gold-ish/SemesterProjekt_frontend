@@ -18,19 +18,22 @@ function URLS() {
 		return URL;
 	}
 
+	function AddRating(movieId, rating) {
+		const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/add/rating/"
+			+ movieId + "/" + rating;
+		return URL;
+	}
+
 	function SpecificMovie(id) {
 		const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/" + id;
 		return URL;
 	}
 	function Search(title, page) {
-		const URL =
-			"https://carolinehoeg.com/semesterprojekt/api/movies/search/" +
-			title +
-			"/" +
-			page;
+		const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/search/" +
+			title + "/" + page;
 		return URL;
 	}
 
-	return { Login, User, Admin, AdminData, SpecificMovie, Search };
+	return { Login, User, Admin, AdminData, SpecificMovie, Search, AddRating };
 }
 export default new URLS();
