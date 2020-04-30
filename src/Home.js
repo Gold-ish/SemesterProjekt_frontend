@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import TopTenMovies from "./topTenMovies";
 import facade from "./apiFacade";
 import URLS from "./Settings";
+import MovieTable from "./MovieTable";
 
 
 export function Home({ searchResult }) {
@@ -10,7 +10,7 @@ export function Home({ searchResult }) {
 		<div>
 			{/* <p>search: {searchResult}</p> */}
 			<br />
-			{(searchResult.length > 0) && (FecthSearchData(searchResult))}
+			{(searchResult.length > 0) && (FetchSearchData(searchResult))}
 
 			<h2>Top 10 movies right now!</h2>
 {/* 
@@ -28,7 +28,7 @@ export function Home({ searchResult }) {
 	);
 }
 
-function FecthSearchData(searchResult) {
+function FetchSearchData(searchResult) {
 	const [dataFromServer, setDataFromServer] = useState("Loading...");
 	useEffect(() => {
 		facade.fetchData(URLS.Search(searchResult, "1")).then((data) => setDataFromServer(data));
@@ -36,7 +36,7 @@ function FecthSearchData(searchResult) {
 
 	return (
 		<React.Fragment>
-			{(dataFromServer.movieDTOs !== undefined) && <TopTenMovies movies={dataFromServer.movieDTOs} />}
+			{(dataFromServer.movieDTOs !== undefined) && <MovieTable movies={dataFromServer.movieDTOs} />}
 		</React.Fragment>
 
 	);

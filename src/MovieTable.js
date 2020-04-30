@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 
 
-const TopTenTable = ({ movies }) => {
+const MovieTable = ({ movies }) => {
 
 	function makeTable() {
 		return (
@@ -42,5 +42,5 @@ const TopTenTable = ({ movies }) => {
 		</div>
 	);
 };
-export default TopTenTable;
+export default MovieTable;
 
