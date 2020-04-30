@@ -3,17 +3,15 @@ import facade from "./apiFacade";
 import URLS from "./Settings";
 import MovieTable from "./MovieTable";
 
-
 export function Home({ searchResult }) {
+  return (
+    <div>
+      {/* <p>search: {searchResult}</p> */}
+      <br />
+      {searchResult.length > 0 && FetchSearchData(searchResult)}
 
-	return (
-		<div>
-			{/* <p>search: {searchResult}</p> */}
-			<br />
-			{(searchResult.length > 0) && (FetchSearchData(searchResult))}
-
-			<h2>Top 10 movies right now!</h2>
-{/* 
+      <h2>Top 10 movies right now!</h2>
+      {/* 
 
 			<br />
 			<p>
@@ -24,20 +22,23 @@ export function Home({ searchResult }) {
 			<p>Username: user1, password: test</p>
 			<p>Username: user2, password: test</p>
 			<p>Username: user3, password: test</p> */}
-		</div>
-	);
+    </div>
+  );
 }
 
 function FetchSearchData(searchResult) {
-	const [dataFromServer, setDataFromServer] = useState("Loading...");
-	useEffect(() => {
-		facade.fetchData(URLS.Search(searchResult, "1")).then((data) => setDataFromServer(data));
-	});
+  const [dataFromServer, setDataFromServer] = useState("Loading...");
+  useEffect(() => {
+    facade
+      .fetchData(URLS.Search(searchResult, "1"))
+      .then((data) => setDataFromServer(data));
+  });
 
-	return (
-		<React.Fragment>
-			{(dataFromServer.movieDTOs !== undefined) && <MovieTable movies={dataFromServer.movieDTOs} />}
-		</React.Fragment>
-
-	);
+  return (
+    <React.Fragment>
+      {dataFromServer.movieDTOs !== undefined && (
+        <MovieTable movies={dataFromServer.movieDTOs} />
+      )}
+    </React.Fragment>
+  );
 }
