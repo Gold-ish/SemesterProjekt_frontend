@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
 import URLs from "./Settings";
+import star from "./Yellow_star.svg";
 
 export function MoviePage() {
   let { imdbID } = useParams();
@@ -22,14 +23,13 @@ export function MoviePage() {
       return "TBD";
     }
   };
-
   return (
     <div>
       <br />
       <h3>{movie.Title}</h3>
       <div className="container">
         <div className="movieinfo">Year: {movie.Year}</div>
-        {/* <div className="movieRated">Rated: {movie.Rated}</div>
+        <div className="movieRated">Rated: {movie.Rated}</div>
         <div className="movieReleased">Released: {movie.Released}</div>
         <div className="movieRuntime">Runtime: {movie.Runtime}</div>
         <div className="movieGenre">Genre: {movie.Genre}</div>
@@ -39,14 +39,17 @@ export function MoviePage() {
         <div className="movieAwards">Awards: {movie.Awards}</div>
         <div className="movieType">Type: {movie.Type}</div>
         <div className="movieDVD">DVD release: {movie.DVD}</div>
-        <div className="movieProduction">Production: {movie.Production}</div> */}
+        <div className="movieProduction">Production: {movie.Production}</div>
         <div className="movieposter">
           <img src={movie.Poster} alt={movie.Title}></img>
         </div>
       </div>
       <br />
       <div className="moviescore">
-        <h5>Average rating: {showAvgRating(movie)}</h5>
+        <h5>
+          Average rating: {showAvgRating(movie)}
+          <img src={star} className="ratingStar" alt="star" />
+        </h5>
       </div>
       <div className="movieplot">{movie.Plot}</div>
       <div className="moviepictures">More pictures</div>
