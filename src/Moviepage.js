@@ -39,7 +39,7 @@ export function MoviePage() {
 			<div className="movieplot">"movie.plot"</div>
 			<div className="moviepictures">More pictures</div>
 			<div className="reviewcontainer">
-				<RatingModal imdbID={imdbID} />
+				<RatingReviewModal imdbID={imdbID} />
 				<div className="review">Review 1 - Skal laves fleksibelt med map</div>
 				<div className="review">Review 2 - Skal laves fleksibelt med map</div>
 				<div className="review">Review 3 - Skal laves fleksibelt med map</div>
@@ -49,14 +49,15 @@ export function MoviePage() {
 	);
 }
 
-function RatingModal({ imdbID }) {
+function RatingReviewModal({ imdbID }) {
 	const [show, setShow] = useState(false);
-	const [rating, setRating] = useState();
+	const [rating, setRating] = useState(0);
+	const [review, setReview] = useState();
 	const [isBlocking, setIsBlocking] = useState(false);
 
 	const handleClose = () => {
 		if (isBlocking) {
-			alert("Are you sure you want to discard your rating?");
+			alert("Are you sure you want to discard your review?");
 			setIsBlocking(false);
 		} else {
 			setShow(false);
@@ -71,26 +72,44 @@ function RatingModal({ imdbID }) {
 
 	return (
 		<>
-			<Button onClick={handleShow}>Add rating</Button>
+			<Button onClick={handleShow}>Add Rating and Review</Button>
 
 			<Modal show={show} onHide={handleClose} >
 				<Modal.Header closeButton>
-					<Modal.Title>Add rating</Modal.Title>
+					<Modal.Title>Add Rating and Review</Modal.Title>
 				</Modal.Header>
 				<form onSubmit={handleSubmit}>
 					<Modal.Body>
-						<p>Add you rating between 0 and 10:   </p>
-						<input type="number" id="rating" min="0" max="10"
-							onChange={event => {
+						<Stars setIsBlocking={setIsBlocking} setRating={setRating} />
+						<br /> <br />
+						<h5>Add you review:  </h5>
+						<textarea className="reviewInput" onChange={event => {
 								setIsBlocking(event.target.value.length > 0);
-								setRating(event.target.value);
-							}} />
+								setReview(event.target.value);
+							}}></textarea>
 					</Modal.Body>
 					<Modal.Footer>
-						<input type="submit" value="Save rating" onClick={() => setIsBlocking(false)} />
+						<input type="submit" value="Save" onClick={() => setIsBlocking(false)} />
 					</Modal.Footer>
 				</form>
 			</Modal>
 		</>
+	);
+}
+
+function Stars({setIsBlocking, setRating}) {
+	return (
+		<fieldset className="rating" onChange={(event) => { setRating(event.target.value); setIsBlocking(true); }}>
+			<input type="radio" id="star10" name="rating" value="10" /><label className="full" for="star10"></label>
+			<input type="radio" id="star9" name="rating" value="9" /><label className="full" for="star9"></label>
+			<input type="radio" id="star8" name="rating" value="8" /><label className="full" for="star8"></label>
+			<input type="radio" id="star7" name="rating" value="7" /><label className="full" for="star7"></label>
+			<input type="radio" id="star6" name="rating" value="6" /><label className="full" for="star6"></label>
+			<input type="radio" id="star5" name="rating" value="5" /><label className="full" for="star5"></label>
+			<input type="radio" id="star4" name="rating" value="4" /><label className="full" for="star4"></label>
+			<input type="radio" id="star3" name="rating" value="3" /><label className="full" for="star3"></label>
+			<input type="radio" id="star2" name="rating" value="2" /><label className="full" for="star2"></label>
+			<input type="radio" id="star1" name="rating" value="1" /><label className="full" for="star1"></label>
+		</fieldset>
 	);
 }
