@@ -7,11 +7,19 @@ import { NavLink } from "react-router-dom";
 const MovieTable = ({ movies }) => {
 
 	function makeTable() {
+		const showAvgRating = (movie) => {
+			if (movie.avgRating !== -1) {
+				return movie.avgRating;
+			} else {
+				return "TBD";
+			}
+		};
+
 		return (
 			<Table striped bordered hover>
 				<thead>
 					<tr>
-						<th>Score: %</th>
+						<th>Average Rating</th>
 						<th>Poster</th>
 						<th>Title </th>
 						<th>Year</th>
@@ -22,7 +30,7 @@ const MovieTable = ({ movies }) => {
 						return (
 							
 								<tr key={movie.imdbID}>
-									<td>{"100%"}</td>
+									<td>{showAvgRating(movie)}</td>
 									<td><NavLink to={`/moviepage/${movie.imdbID}`}><img src={movie.Poster} alt={movie.Title} width="200" /></NavLink></td>
 									<td><NavLink to={`/moviepage/${movie.imdbID}`}>{movie.Title}</NavLink></td>
 									<td>{movie.Year}</td>

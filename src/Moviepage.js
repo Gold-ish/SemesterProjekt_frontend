@@ -16,6 +16,14 @@ export function MoviePage() {
 		});
 	}, []);
 
+	const showAvgRating = (movie) => {
+		if (movie.avgRating !== -1) {
+			return movie.avgRating;
+		} else {
+			return "TBD";
+		}
+	};
+
 	return (
 		<div>
 			<br />
@@ -27,10 +35,9 @@ export function MoviePage() {
 				</div>
 			</div>
 			<br />
-			<div className="movieavgrating"><h5>Average rating: {movie.avgRating}</h5></div>
-			<div className="moviescore">90%</div>
+			<div className="moviescore"><h5>Average rating: {showAvgRating(movie)}</h5></div>
 			<div className="movieplot">"movie.plot"</div>
-			<div className="moviepictures">More picturs</div>
+			<div className="moviepictures">More pictures</div>
 			<div className="reviewcontainer">
 				<RatingModal imdbID={imdbID} />
 				<div className="review">Review 1 - Skal laves fleksibelt med map</div>
