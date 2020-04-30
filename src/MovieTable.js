@@ -3,7 +3,6 @@ import Table from "react-bootstrap/Table";
 import { NavLink } from "react-router-dom";
 
 
-
 const MovieTable = ({ movies }) => {
 
 	function makeTable() {
@@ -20,14 +19,14 @@ const MovieTable = ({ movies }) => {
 				<tbody>
 					{movies.map(movie => {
 						return (
-							
-								<tr key={movie.imdbID}>
-									<td>{"100%"}</td>
-									<td><NavLink to={`/moviepage/${movie.imdbID}`}><img src={movie.Poster} alt={movie.Title} width="200" /></NavLink></td>
-									<td><NavLink to={`/moviepage/${movie.imdbID}`}>{movie.Title}</NavLink></td>
-									<td>{movie.Year}</td>
-								</tr>
-							
+
+							<tr key={movie.imdbID}>
+								<td>{"100%"}</td>
+								<td><NavLink to={`/moviepage/${movie.imdbID}`}><img src={movie.Poster} alt={movie.Title} width="200" /></NavLink></td>
+								<td><NavLink to={`/moviepage/${movie.imdbID}`}>{movie.Title}</NavLink></td>
+								<td>{movie.Year}</td>
+							</tr>
+
 						)
 					}
 					)}
@@ -36,10 +35,9 @@ const MovieTable = ({ movies }) => {
 	}
 
 	return (
-		<div>
-			<br />
+		<React.Fragment>
 			{makeTable()}
-		</div>
+		</React.Fragment>
 	);
 };
 export default MovieTable;
