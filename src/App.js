@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Header } from "./Header";
 import { Home } from "./Home";
+import { SearchPage } from "./SearchPage";
 import { Login } from "./Login";
 import { User } from "./User";
 import { Admin } from "./Admin";
@@ -29,7 +30,10 @@ export default function App() {
 				/>
 				<Switch>
 					<Route exact path="/">
-						<Home searchResult={searchResult} />
+						<Home/>
+					</Route>
+					<Route path={`/search`}>
+						<SearchPage searchString={searchResult.toString()} />
 					</Route>
 					<Route path={`/moviepage/:imdbID`}>
 						<MoviePage />

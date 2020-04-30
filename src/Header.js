@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
@@ -10,13 +10,17 @@ export function Header({
 	username,
 	roles,
 	setSearchResult,
+	
 }) {
 	const [search, setSearch] = useState("");
+	let history = useHistory();
 	const searchF = (evt) => {
-		setSearchResult(search);
 		evt.preventDefault();
+		history.push("/search");
+		setSearchResult(search);
 		setSearch("");
 	};
+
 	const onChange = (evt) => {
 		evt.preventDefault();
 		setSearch(evt.target.value);
@@ -56,8 +60,8 @@ export function Header({
 						onChange={onChange}
 					/>
 					<InputGroup.Append>
-						<Button variant="outline-secondary" onClick={searchF}>
-							Search
+						<Button onClick = {searchF}>
+							search
 						</Button>
 					</InputGroup.Append>
 				</InputGroup>
