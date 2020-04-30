@@ -8,11 +8,12 @@ export function Home({ searchResult }) {
 
 	return (
 		<div>
-			<p>search: {searchResult}</p>
+			{/* <p>search: {searchResult}</p> */}
+			<br />
 			{(searchResult.length > 0) && (FecthSearchData(searchResult))}
 
 			<h2>Top 10 movies right now!</h2>
-
+{/* 
 
 			<br />
 			<p>
@@ -22,7 +23,7 @@ export function Home({ searchResult }) {
 			<p>Username: admin, password: test</p>
 			<p>Username: user1, password: test</p>
 			<p>Username: user2, password: test</p>
-			<p>Username: user3, password: test</p>
+			<p>Username: user3, password: test</p> */}
 		</div>
 	);
 }

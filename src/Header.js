@@ -47,7 +47,7 @@ export function Header({
 				</React.Fragment>
 			)}
 			<li className="search">
-				<InputGroup className="mb-3">
+				<InputGroup className="mb-3 searchform">
 					<FormControl
 						placeholder="Search movietitle"
 						aria-label="Recipient's username"

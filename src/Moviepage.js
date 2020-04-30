@@ -16,6 +16,7 @@ export function MoviePage() {
 
 	return (
 		<div>
+			<br />
 			<h3>{movie.Title}</h3>
 			<div className="container">
 				<div className="movieinfo">Year: {movie.Year}</div>

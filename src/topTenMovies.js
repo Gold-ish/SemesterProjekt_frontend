@@ -37,6 +37,7 @@ const TopTenTable = ({ movies }) => {
 
 	return (
 		<div>
+			<br />
 			{makeTable()}
 		</div>
 	);

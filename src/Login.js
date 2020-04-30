@@ -44,6 +44,7 @@ function LogIn({ login, loginMsg }) {
 	};
 	return (
 		<div>
+			<br />
 			<h2>{loginMsg}</h2>
 			<form onChange={onChange}>
 				<input placeholder="Username" id="username" /> <br />

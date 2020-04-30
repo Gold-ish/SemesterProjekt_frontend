@@ -3,9 +3,7 @@ import React from "react";
 const searchedMovies = ({ movies }) => {
 	return (
 		<div>
-			<p>
-				Replace the tbody section with rows generated from the movies endpoint
-			</p>
+			<br />
 			<table className="table">
 				<tbody>
 					{movies.map((movie) => {

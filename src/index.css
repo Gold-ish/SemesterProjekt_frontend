@@ -7,12 +7,8 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
-}
-
 ul.header {
+	text-align: center;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -23,14 +19,19 @@ ul.header {
 ul.header li {
 	float: left;
 }
+
 ul.header li.right {
 	float: right;
 }
 
 ul.header li.search {
-	margin-left: 10%;
 	margin-top: 10px;
 	width: 50%;
+}
+
+.searchform {
+	margin-left: 25%;
+    margin-right:25%;
 }
 
 ul.header li a {
@@ -40,9 +41,11 @@ ul.header li a {
 	padding: 14px 16px;
 	text-decoration: none;
 }
+
 ul.header li a:hover:not(.active) {
 	background-color: #111;
 }
+
 .active {
 	background-color: #4caf50;
 }
