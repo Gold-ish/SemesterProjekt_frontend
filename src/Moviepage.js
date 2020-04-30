@@ -26,6 +26,8 @@ export function MoviePage() {
 					<img src={movie.Poster} alt={movie.Title}></img>
 				</div>
 			</div>
+			<br />
+			<div className="movieavgrating"><h5>Average rating: {movie.avgRating}</h5></div>
 			<div className="moviescore">90%</div>
 			<div className="movieplot">"movie.plot"</div>
 			<div className="moviepictures">More picturs</div>
