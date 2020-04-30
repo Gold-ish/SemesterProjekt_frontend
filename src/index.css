@@ -110,3 +110,7 @@ label { margin: 0; padding: 0; }
   width: 100%;
   height: 150px;
 }
+
+.ratingStar {
+	height: 20px;
+}

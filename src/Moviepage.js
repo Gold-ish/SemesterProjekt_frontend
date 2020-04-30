@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
 import URLs from "./Settings";
+import star from "./Yellow_star.svg"
 
 
 export function MoviePage() {
@@ -35,7 +36,11 @@ export function MoviePage() {
 				</div>
 			</div>
 			<br />
-			<div className="moviescore"><h5>Average rating: {showAvgRating(movie)}</h5></div>
+			<div className="moviescore">
+				<h5>Average rating: {showAvgRating(movie)}
+					<img src={star} className="ratingStar" alt="star" />
+				</h5>
+			</div>
 			<div className="movieplot">"movie.plot"</div>
 			<div className="moviepictures">More pictures</div>
 			<div className="reviewcontainer">
@@ -84,9 +89,9 @@ function RatingReviewModal({ imdbID }) {
 						<br /> <br />
 						<h5>Add you review:  </h5>
 						<textarea className="reviewInput" onChange={event => {
-								setIsBlocking(event.target.value.length > 0);
-								setReview(event.target.value);
-							}}></textarea>
+							setIsBlocking(event.target.value.length > 0);
+							setReview(event.target.value);
+						}}></textarea>
 					</Modal.Body>
 					<Modal.Footer>
 						<input type="submit" value="Save" onClick={() => setIsBlocking(false)} />
@@ -97,7 +102,7 @@ function RatingReviewModal({ imdbID }) {
 	);
 }
 
-function Stars({setIsBlocking, setRating}) {
+function Stars({ setIsBlocking, setRating }) {
 	return (
 		<fieldset className="rating" onChange={(event) => { setRating(event.target.value); setIsBlocking(true); }}>
 			<input type="radio" id="star10" name="rating" value="10" /><label className="full" for="star10"></label>
