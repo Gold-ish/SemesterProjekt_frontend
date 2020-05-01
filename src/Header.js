@@ -10,7 +10,7 @@ export function Header({
 	username,
 	roles,
 	setSearchResult,
-	
+
 }) {
 	const [search, setSearch] = useState("");
 	let history = useHistory();
@@ -32,15 +32,9 @@ export function Header({
 					Home
 				</NavLink>
 			</li>
+
 			{isLoggedIn && (
 				<React.Fragment>
-					{roles.includes("user") && (
-						<li>
-							<NavLink activeClassName="active" to="/user">
-								Cats & Dogs
-							</NavLink>
-						</li>
-					)}
 					{roles.includes("admin") && (
 						<li>
 							<NavLink activeClassName="active" to="/admin">
@@ -50,27 +44,42 @@ export function Header({
 					)}
 				</React.Fragment>
 			)}
+
 			<li className="search">
 				<InputGroup className="mb-3 searchform">
 					<FormControl
 						placeholder="Search movietitle"
-						aria-label="Recipient's username"
-						aria-describedby="basic-addon2"
 						value={search}
 						onChange={onChange}
 					/>
 					<InputGroup.Append>
-						<Button onClick = {searchF}>
+						<Button onClick={searchF}>
 							search
 						</Button>
 					</InputGroup.Append>
 				</InputGroup>
 			</li>
+
+			
+
 			<li className="right">
 				<NavLink activeClassName="active" to="/login-out">
 					{loginMsg}
 				</NavLink>
 			</li>
+			
+			{isLoggedIn && (
+				<React.Fragment>
+					{roles.includes("user") && (
+						<li className="right">
+							<NavLink activeClassName="active" to="/user">
+								{username}
+							</NavLink>
+						</li>
+					)}
+				</React.Fragment>
+			)}
+
 			{isLoggedIn && (
 				<li>
 					<p>
