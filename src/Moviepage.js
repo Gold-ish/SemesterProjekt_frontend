@@ -23,6 +23,12 @@ export function MoviePage() {
       return "TBD";
     }
   };
+
+  //Lav det som et table
+  // const reviewMap = movie.review.map(function (a) {
+  //   return <li key={a.id}>{a.review}</li>;
+  // });
+
   return (
     <div>
       <br />
@@ -55,6 +61,7 @@ export function MoviePage() {
       <div className="moviepictures">More pictures</div>
       <div className="reviewcontainer">
         <RatingReviewModal imdbID={imdbID} />
+        {console.log(movie.review)}
         <div className="review">Review 1 - Skal laves fleksibelt med map</div>
         <div className="review">Review 2 - Skal laves fleksibelt med map</div>
         <div className="review">Review 3 - Skal laves fleksibelt med map</div>
@@ -82,6 +89,7 @@ function RatingReviewModal({ imdbID }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     facade.addRating(URLs.AddRating(imdbID, rating));
+    facade.addReview(URLs.AddReview(imdbID, review));
     handleClose();
   };
 
