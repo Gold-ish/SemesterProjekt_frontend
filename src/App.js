@@ -39,7 +39,6 @@ export default function App() {
 						<MoviePage />
 					</Route>
 					<Route exact path="/user">
-						{/* <User /> */}
 						<UserPage />
 					</Route>
 					<Route exact path="/admin">
