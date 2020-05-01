@@ -63,7 +63,6 @@ export function MoviePage() {
 }
 
 function ShowReviews(reviewArray) {
-  console.log(reviewArray.length);
   return (
     <div className="review">
       <h3>User reviews: </h3>

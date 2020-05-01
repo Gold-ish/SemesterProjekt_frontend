@@ -6,7 +6,7 @@ import { SearchPage } from "./SearchPage";
 import { Login } from "./Login";
 import { UserPage } from "./UserPage";
 import { Admin } from "./Admin";
-import { MoviePage } from "./Moviepage";
+import { MoviePage } from "./MoviePage";
 import "./App.css";
 
 export default function App() {
@@ -39,7 +39,6 @@ export default function App() {
             <MoviePage />
           </Route>
           <Route exact path="/user">
-            {/* <User /> */}
             <UserPage />
           </Route>
           <Route exact path="/admin">
