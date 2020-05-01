@@ -129,25 +129,25 @@ function Stars({ setIsBlocking, setRating }) {
       }}
     >
       <input type="radio" id="star10" name="rating" value="10" />
-      <label className="full" for="star10"></label>
+      <label className="full" htmlFor="star10"></label>
       <input type="radio" id="star9" name="rating" value="9" />
-      <label className="full" for="star9"></label>
+      <label className="full" htmlFor="star9"></label>
       <input type="radio" id="star8" name="rating" value="8" />
-      <label className="full" for="star8"></label>
+      <label className="full" htmlFor="star8"></label>
       <input type="radio" id="star7" name="rating" value="7" />
-      <label className="full" for="star7"></label>
+      <label className="full" htmlFor="star7"></label>
       <input type="radio" id="star6" name="rating" value="6" />
-      <label className="full" for="star6"></label>
+      <label className="full" htmlFor="star6"></label>
       <input type="radio" id="star5" name="rating" value="5" />
-      <label className="full" for="star5"></label>
+      <label className="full" htmlFor="star5"></label>
       <input type="radio" id="star4" name="rating" value="4" />
-      <label className="full" for="star4"></label>
+      <label className="full" htmlFor="star4"></label>
       <input type="radio" id="star3" name="rating" value="3" />
-      <label className="full" for="star3"></label>
+      <label className="full" htmlFor="star3"></label>
       <input type="radio" id="star2" name="rating" value="2" />
-      <label className="full" for="star2"></label>
+      <label className="full" htmlFor="star2"></label>
       <input type="radio" id="star1" name="rating" value="1" />
-      <label className="full" for="star1"></label>
+      <label className="full" htmlFor="star1"></label>
     </fieldset>
   );
 }

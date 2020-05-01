@@ -4,9 +4,9 @@ import { Header } from "./Header";
 import { Home } from "./Home";
 import { SearchPage } from "./SearchPage";
 import { Login } from "./Login";
-import { User } from "./User";
+import { UserPage } from './UserPage';
 import { Admin } from "./Admin";
-import { MoviePage } from "./Moviepage";
+import { MoviePage } from "./MoviePage";
 import "./App.css";
 
 export default function App() {
@@ -30,16 +30,17 @@ export default function App() {
 				/>
 				<Switch>
 					<Route exact path="/">
-						<Home/>
+						<Home />
 					</Route>
-					<Route path={`/search`}>
+					<Route exact path="/search">
 						<SearchPage searchString={searchResult.toString()} />
 					</Route>
 					<Route path={`/moviepage/:imdbID`}>
 						<MoviePage />
 					</Route>
 					<Route exact path="/user">
-						<User />
+						{/* <User /> */}
+						<UserPage />
 					</Route>
 					<Route exact path="/admin">
 						<Admin />
