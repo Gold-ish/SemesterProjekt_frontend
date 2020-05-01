@@ -55,6 +55,16 @@ ul.header li a:hover:not(.active) {
 	width: 90%;
 }
 
+.moviePoster {
+	width: 200px;
+	margin: auto;
+}
+
+.movieTableContent {
+	text-align: center;
+	margin: auto;
+}
+
 .pagination {
 	margin: auto;
 	margin-bottom: 10px;

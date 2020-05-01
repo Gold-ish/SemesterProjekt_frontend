@@ -29,22 +29,32 @@ const MovieTable = ({ movies }) => {
 							return (
 								<tr key={movie.imdbID}>
 									<td>
-										<h2>
-											{showAvgRating(movie)}/10
-											<img src={star} className="ratingStarTable" alt="star" />
-										</h2>
+										<div className="movieTableContent">
+											<h2>
+												{showAvgRating(movie)}/10
+												<img
+													src={star}
+													className="ratingStarTable"
+													alt="star"
+												/>
+											</h2>
+										</div>
 									</td>
 									<td>
 										<NavLink to={`/moviepage/${movie.imdbID}`}>
-											<img src={movie.Poster} alt={movie.Title} width="200" />
+											<div className="moviePoster">
+												<img src={movie.Poster} alt={movie.Title} width="200" />
+											</div>
 										</NavLink>
 									</td>
 									<td>
 										<NavLink to={`/moviepage/${movie.imdbID}`}>
-											{movie.Title}
+											<div className="movieTableContent">{movie.Title}</div>
 										</NavLink>
 									</td>
-									<td>{movie.Year}</td>
+									<td>
+										<div className="movieTableContent">{movie.Year}</div>
+									</td>
 								</tr>
 							);
 						})}
