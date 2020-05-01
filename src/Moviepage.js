@@ -28,19 +28,21 @@ export function MoviePage() {
     <div>
       <br />
       <h3>{movie.Title}</h3>
-      <div className="container">
-        <div className="movieinfo">Year: {movie.Year}</div>
-        <div className="movieRated">Rated: {movie.Rated}</div>
-        <div className="movieReleased">Released: {movie.Released}</div>
-        <div className="movieRuntime">Runtime: {movie.Runtime}</div>
-        <div className="movieGenre">Genre: {movie.Genre}</div>
-        <div className="movieDirector">Director: {movie.Director}</div>
-        <div className="movieActors">Actors: {movie.Actors}</div>
-        <div className="movieLanguage">Language: {movie.Language}</div>
-        <div className="movieAwards">Awards: {movie.Awards}</div>
-        <div className="movieType">Type: {movie.Type}</div>
-        <div className="movieDVD">DVD release: {movie.DVD}</div>
-        <div className="movieProduction">Production: {movie.Production}</div>
+      <div className="flex-container">
+        <div className="container">
+          <div className="movieinfo"><b>Year:</b> {movie.Year}</div>
+          <div className="movieRated">Rated: {movie.Rated}</div>
+          <div className="movieReleased">Released: {movie.Released}</div>
+          <div className="movieRuntime">Runtime: {movie.Runtime}</div>
+          <div className="movieGenre">Genre: {movie.Genre}</div>
+          <div className="movieDirector">Director: {movie.Director}</div>
+          <div className="movieActors">Actors: {movie.Actors}</div>
+          <div className="movieLanguage">Language: {movie.Language}</div>
+          <div className="movieAwards">Awards: {movie.Awards}</div>
+          <div className="movieType">Type: {movie.Type}</div>
+          <div className="movieDVD">DVD release: {movie.DVD}</div>
+          <div className="movieProduction">Production: {movie.Production}</div>
+        </div>
         <div className="movieposter">
           <img src={movie.Poster} alt={movie.Title}></img>
         </div>
@@ -55,27 +57,32 @@ export function MoviePage() {
       <div className="movieplot">{movie.Plot}</div>
       <div className="moviepictures">More pictures</div>
       <div className="reviewcontainer">
-        <RatingReviewModal imdbID={imdbID} />
-        {movie.review !== undefined && ShowReviews(movie.review)}
+        {movie.review !== undefined && ShowReviews(movie.review, imdbID)}
       </div>
     </div>
   );
 }
 
-function ShowReviews(reviewArray) {
+function ShowReviews(reviewArray, { imdbID }) {
   return (
-    <div className="review">
-      <h3>User reviews: </h3>
+    <>
+      <div className="review">
+        <RatingReviewModal imdbID={imdbID} />
+        <h3>User reviews: </h3>
+      </div>
       {reviewArray.length !== 0 ? (
-        <ul>
+        <div className="flex-container baseline">
           {reviewArray.map((element) => (
-            <li key={element.id}>{element.review}</li>
+            <div className="reviewCard" key={element.id}>
+              <p><b>USERNAME</b></p>
+              <p>{element.review}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
-        <h4>Be the first one to write a review!</h4>
-      )}
-    </div>
+          <h5>Be the first one to write a review!</h5>
+        )}
+    </>
   );
 }
 
@@ -103,7 +110,7 @@ function RatingReviewModal({ imdbID }) {
 
   return (
     <>
-      <Button onClick={handleShow}>Add Rating and Review</Button>
+      <Button onClick={handleShow} className="right">Add Rating and Review</Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
