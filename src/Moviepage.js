@@ -29,20 +29,7 @@ export function MoviePage() {
       <br />
       <h3>{movie.Title}</h3>
       <div className="flex-container">
-        <div className="container">
-          <div className="movieinfo"><b>Year:</b> {movie.Year}</div>
-          <div className="movieRated">Rated: {movie.Rated}</div>
-          <div className="movieReleased">Released: {movie.Released}</div>
-          <div className="movieRuntime">Runtime: {movie.Runtime}</div>
-          <div className="movieGenre">Genre: {movie.Genre}</div>
-          <div className="movieDirector">Director: {movie.Director}</div>
-          <div className="movieActors">Actors: {movie.Actors}</div>
-          <div className="movieLanguage">Language: {movie.Language}</div>
-          <div className="movieAwards">Awards: {movie.Awards}</div>
-          <div className="movieType">Type: {movie.Type}</div>
-          <div className="movieDVD">DVD release: {movie.DVD}</div>
-          <div className="movieProduction">Production: {movie.Production}</div>
-        </div>
+        <InfoTable movie={movie} />
         <div className="movieposter">
           <img src={movie.Poster} alt={movie.Title}></img>
         </div>
@@ -59,7 +46,62 @@ export function MoviePage() {
       <div className="reviewcontainer">
         {movie.review !== undefined && ShowReviews(movie.review, imdbID)}
       </div>
-    </div>
+    </div >
+  );
+}
+
+function InfoTable({ movie }) {
+  return (
+    <table className="movieInfo">
+      <tr>
+        <td className="right bold">Year:</td>
+        <td>{movie.Year}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Rated:</td>
+        <td>{movie.Rated}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Released:</td>
+        <td>{movie.Released}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Runtime:</td>
+        <td>{movie.Runtime}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Genre:</td>
+        <td>{movie.Genre}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Director:</td>
+        <td>{movie.Director}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Actors:</td>
+        <td>{movie.Actors}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Language:</td>
+        <td>{movie.Language}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Awards:</td>
+        <td>{movie.Awards}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Type:</td>
+        <td>{movie.Type}</td>
+      </tr>
+      <tr>
+        <td className="right bold">DVD release:</td>
+        <td>{movie.DVD}</td>
+      </tr>
+      <tr>
+        <td className="right bold">Production:</td>
+        <td>{movie.Production}</td>
+      </tr>
+    </table>
   );
 }
 

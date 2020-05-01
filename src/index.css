@@ -83,9 +83,9 @@ td {
 	padding: 8px;
 }
 
-tr:nth-child(odd) {
-	background-color: #8fbc8f;
-}
+/* tr:nth-child(odd) {
+  background-color: #8fbc8f;
+} */
 
 .container {
 	display: flex;
@@ -194,4 +194,13 @@ label {
 
 .review {
 	padding-right: 20%;
+}
+
+table .movieInfo{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.bold {
+  font-weight: bold;
 }
