@@ -63,9 +63,9 @@ td {
   padding: 8px;
 }
 
-tr:nth-child(odd) {
+/* tr:nth-child(odd) {
   background-color: #8fbc8f;
-}
+} */
 
 .container {
   display: flex;
@@ -152,12 +152,12 @@ label {
 
 .flex-container {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
   justify-content: center;
 }
 
 .baseline {
+  flex-wrap: wrap;
+  flex-direction: row;
   align-items: baseline;
 }
 
@@ -174,4 +174,13 @@ label {
 
 .review {
   padding-right:20%;
+}
+
+table .movieInfo{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.bold {
+  font-weight: bold;
 }
