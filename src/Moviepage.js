@@ -9,7 +9,6 @@ import star from "./Yellow_star.svg";
 export function MoviePage() {
   let { imdbID } = useParams();
   const [movie, setMovie] = useState("Loading...");
-
   useEffect(() => {
     facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
       setMovie(data);
@@ -105,7 +104,7 @@ function InfoTable({ movie }) {
   );
 }
 
-function ShowReviews(reviewArray, { imdbID }) {
+function ShowReviews(reviewArray, imdbID ) {
   return (
     <>
       <div className="review">

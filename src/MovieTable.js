@@ -1,9 +1,10 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import star from "./Yellow_star.svg";
 
-const MovieTable = ({ movies }) => {
+export function MovieTable ({ movies }) {
+	let history = useHistory();
 	function makeTable() {
 		const showAvgRating = (movie) => {
 			if (movie.avgRating !== -1) {
@@ -27,7 +28,7 @@ const MovieTable = ({ movies }) => {
 					<tbody>
 						{movies.map((movie) => {
 							return (
-								<tr key={movie.imdbID}>
+								<tr key={movie.imdbID} onClick={() => history.push("/moviepage/"+movie.imdbID)}>
 									<td>
 										<div className="movieTableContent">
 											<h2>
@@ -41,16 +42,12 @@ const MovieTable = ({ movies }) => {
 										</div>
 									</td>
 									<td>
-										<NavLink to={`/moviepage/${movie.imdbID}`}>
 											<div className="moviePoster">
 												<img src={movie.Poster} alt={movie.Title} width="200" />
 											</div>
-										</NavLink>
 									</td>
 									<td>
-										<NavLink to={`/moviepage/${movie.imdbID}`}>
 											<div className="movieTableContent">{movie.Title}</div>
-										</NavLink>
 									</td>
 									<td>
 										<div className="movieTableContent">{movie.Year}</div>
