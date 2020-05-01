@@ -24,11 +24,6 @@ export function MoviePage() {
     }
   };
 
-  //Lav det som et table
-  // const reviewMap = movie.review.map(function (a) {
-  //   return <li key={a.id}>{a.review}</li>;
-  // });
-
   return (
     <div>
       <br />
@@ -61,12 +56,26 @@ export function MoviePage() {
       <div className="moviepictures">More pictures</div>
       <div className="reviewcontainer">
         <RatingReviewModal imdbID={imdbID} />
-        {console.log(movie.review)}
-        <div className="review">Review 1 - Skal laves fleksibelt med map</div>
-        <div className="review">Review 2 - Skal laves fleksibelt med map</div>
-        <div className="review">Review 3 - Skal laves fleksibelt med map</div>
-        <div className="review">Review 4 - Skal laves fleksibelt med map</div>
+        {movie.review !== undefined && ShowReviews(movie.review)}
       </div>
+    </div>
+  );
+}
+
+function ShowReviews(reviewArray) {
+  console.log(reviewArray.length);
+  return (
+    <div className="review">
+      <h3>User reviews: </h3>
+      {reviewArray.length !== 0 ? (
+        <ul>
+          {reviewArray.map((element) => (
+            <li key={element.id}>{element.review}</li>
+          ))}
+        </ul>
+      ) : (
+        <h4>Be the first one to write a review!</h4>
+      )}
     </div>
   );
 }
