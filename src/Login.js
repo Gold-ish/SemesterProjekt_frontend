@@ -23,7 +23,13 @@ export function Login({
   return (
     <div>
       {!isLoggedIn ? (
-        <LogIn login={login} loginMsg={loginMsg} />
+        <LogIn
+          login={login}
+          loginMsg={loginMsg}
+          setLoginStatus={setLoginStatus}
+          setUsername={setUsername}
+          setRoles={setRoles}
+        />
       ) : (
         <LoggedIn logout={logout} loginMsg={loginMsg} />
       )}

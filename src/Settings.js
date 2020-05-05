@@ -1,14 +1,14 @@
 function URLS() {
   function Login() {
-    const URL = "http://localhost:8080/semesterprojekt/api/login";
+    const URL = "https://carolinehoeg.com/semesterprojekt/api/login";
     return URL;
   }
   function Register() {
-    const URL = "http://localhost:8080/semesterprojekt/api/login/register";
+    const URL = "https://carolinehoeg.com/semesterprojekt/api/login/register";
     return URL;
   }
   function User() {
-    const URL = "http://localhost:8080/semesterprojekt/api/info/user";
+    const URL = "https://carolinehoeg.com/semesterprojekt/api/info/user";
     return URL;
   }
 
