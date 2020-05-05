@@ -3,6 +3,10 @@ function URLS() {
     const URL = "https://carolinehoeg.com/semesterprojekt/api/login";
     return URL;
   }
+  function Register() {
+    const URL = "https://carolinehoeg.com/semesterprojekt/api/login/register";
+    return URL;
+  }
   function User() {
     const URL = "https://carolinehoeg.com/semesterprojekt/api/info/user";
     return URL;
@@ -58,6 +62,7 @@ function URLS() {
     Search,
     AddRating,
     AddReview,
+    Register,
   };
 }
 export default new URLS();

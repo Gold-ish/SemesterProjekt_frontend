@@ -54,6 +54,30 @@ function apiFacade() {
     return fetch(URL, options).then(handleHttpErrors);
   };
 
+  const registerUser = (
+    user,
+    password,
+    gender,
+    birthday,
+    setUsername,
+    setRoles
+  ) => {
+    const options = makeOptions("POST", true, {
+      username: user,
+      password: password,
+      gender: gender,
+      birthday: birthday,
+    });
+    return fetch(URLS.Register(), options)
+      .then(handleHttpErrors)
+      .then((res) => {
+        setToken(res.token);
+        setUsername(res.username);
+        setRoles(res.role);
+        console.log(res.role);
+      });
+  };
+
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -80,6 +104,7 @@ function apiFacade() {
     fetchData,
     addRating,
     addReview,
+    registerUser,
   };
 }
 const facade = apiFacade();
