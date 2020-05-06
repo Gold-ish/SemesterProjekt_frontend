@@ -30,10 +30,6 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
       gender !== undefined &&
       birthday !== undefined
     ) {
-      // console.log(username);
-      // console.log(password);
-      // console.log(gender);
-      // console.log(birthday);
       handleClose();
       facade
         .registerUser(
@@ -45,7 +41,6 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
           setRoles
         )
         .then((res) => {
-          console.log(res);
           setLoginStatus(true);
         });
       flushData();

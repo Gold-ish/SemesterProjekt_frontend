@@ -45,9 +45,10 @@ function URLS() {
     return URL;
   }
   function Search(title, page) {
+    let formattedTitle = title.split(" ").join("+");
     const URL =
       "https://carolinehoeg.com/semesterprojekt/api/movies/search/" +
-      title +
+      formattedTitle +
       "/" +
       page;
     return URL;

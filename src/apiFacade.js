@@ -35,7 +35,6 @@ function apiFacade() {
         setToken(res.token);
         setUsername(res.username);
         setRoles(res.role);
-        console.log(res.role);
       });
   };
 
