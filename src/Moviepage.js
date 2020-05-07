@@ -13,7 +13,7 @@ export function MoviePage() {
     facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
       setMovie(data);
     });
-  }, []);
+  }, [imdbID]);
 
   const showAvgRating = (movie) => {
     if (movie.avgRating !== -1) {
@@ -45,7 +45,7 @@ export function MoviePage() {
       <div className="reviewcontainer">
         {movie.review !== undefined && ShowReviews(movie.review, imdbID)}
       </div>
-    </div >
+    </div>
   );
 }
 
@@ -104,7 +104,7 @@ function InfoTable({ movie }) {
   );
 }
 
-function ShowReviews(reviewArray, imdbID ) {
+function ShowReviews(reviewArray, imdbID) {
   return (
     <>
       <div className="review">
@@ -115,14 +115,16 @@ function ShowReviews(reviewArray, imdbID ) {
         <div className="flex-container baseline">
           {reviewArray.map((element) => (
             <div className="reviewCard" key={element.id}>
-              <p><b>USERNAME</b></p>
+              <p>
+                <b>USERNAME</b>
+              </p>
               <p>{element.review}</p>
             </div>
           ))}
         </div>
       ) : (
-          <h5>Be the first one to write a review!</h5>
-        )}
+        <h5>Be the first one to write a review!</h5>
+      )}
     </>
   );
 }
@@ -151,7 +153,9 @@ function RatingReviewModal({ imdbID }) {
 
   return (
     <>
-      <Button onClick={handleShow} className="right">Add Rating and Review</Button>
+      <Button onClick={handleShow} className="right">
+        Add Rating and Review
+      </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

@@ -16,48 +16,114 @@ function UserFetch() {
   useEffect(() => {
     facade.fetchData(URLS.User()).then((data) => setDataFromServer(data.msg));
   }, []);
+
+  let destructuredFetchData = {
+    username: "testUserName",
+    password: "testPassword",
+    birthday: "testDate",
+    gender: "testGender",
+    reviews: [
+      {
+        id: 8,
+        movieID: "ttkj3kd",
+        review: "this movie is super good",
+        username: "testUserName",
+        rating: {
+          id: 8,
+          movieID: "ttkj3kd",
+          rating: 8,
+          username: "testUserName",
+        },
+      },
+      {
+        id: 26,
+        movieID: "tt5de5dp",
+        review: "abdc bad review",
+        username: "randomusername",
+        rating: {
+          id: 8,
+          movieID: "ttkj3kd",
+          rating: 8,
+          username: "testUserName",
+        },
+      },
+    ],
+  };
+  const { username, birthday, gender, reviews } = destructuredFetchData;
   return (
     <div className="outer">
-      <UserStats dataFromServer={dataFromServer}></UserStats>
-      <UserReviewRating dataFromServer={dataFromServer}></UserReviewRating>
+      <UserStats
+        dataFromServer={dataFromServer}
+        username={username}
+        birthday={birthday}
+        gender={gender}
+      />
+      <UserReviewRating dataFromServer={dataFromServer} reviews={reviews} />
     </div>
   );
 }
 
-function UserStats({ dataFromServer }) {
+function UserStats(props) {
   return (
     <div>
-      <h3>{dataFromServer}</h3>
+      <h3>{props.dataFromServer}</h3>
       <table align="center" border="1">
-        <tr>
-          <th>Gender:</th>
-          <td>dataFromServer.gender</td>
-        </tr>
-        <tr>
-          <th>test</th>
-          <td>tmp - This needs to be mapped</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>
+              <p>Username:</p>
+            </th>
+            <td>{props.username}</td>
+          </tr>
+          <tr>
+            <th>
+              <p>Birthday:</p>
+            </th>
+            <td>{props.birthday}</td>
+          </tr>
+          <tr>
+            <th>
+              <p>Gender:</p>
+            </th>
+            <td>{props.gender}</td>
+          </tr>
+        </thead>
       </table>
+      {/* 
+      INSERT USER PICTURE OR DEFAULT PIC THING.
+      Let them stand side by side with the table info
+       */}
     </div>
   );
 }
 
-function UserReviewRating({ dataFromServer }) {
+function UserReviewRating(props) {
   return (
     <div>
       <br />
       <h3>My reviews and Ratings</h3>
-      <table align="center" border="1">
-        <thead>
-          <tr>
-            <th align="left">Movie: </th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* dataFromServer */}
-          <td>map data review, and rating here.</td>
-        </tbody>
-      </table>
+      {props.reviews.map((element) => {
+        return (
+          <table align="center" border="1" key={props.reviews.indexOf(element)}>
+            <thead>
+              <tr>
+                <th>
+                  <p>Potentially the movies name here: {element.movieID}</p>
+                  <br />
+                  <p>Personal rating: {element.rating.rating}</p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>{element.review}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      })}
     </div>
   );
 }
