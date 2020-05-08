@@ -22,21 +22,15 @@ function URLS() {
     return URL;
   }
 
-  function AddRating(movieId, rating) {
+  function AddRating() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/add/rating/" +
-      movieId +
-      "/" +
-      rating;
+      "https://carolinehoeg.com/semesterprojekt/api/movies/add/rating/"
     return URL;
   }
 
-  function AddReview(movieId, rating) {
+  function AddReview() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/add/review/" +
-      movieId +
-      "/" +
-      rating;
+      "https://carolinehoeg.com/semesterprojekt/api/movies/add/review/"
     return URL;
   }
 

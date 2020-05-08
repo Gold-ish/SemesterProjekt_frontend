@@ -12,7 +12,7 @@ export function Login({
   const logout = () => {
     facade.logout();
     setLoginStatus(false);
-    setUsername("");
+    setUsername();
     setRoles("");
   };
   const login = (user, pass) => {

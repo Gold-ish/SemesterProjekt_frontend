@@ -43,14 +43,24 @@ function apiFacade() {
     return fetch(URL, options).then(handleHttpErrors);
   };
 
-  const addRating = (URL) => {
-    const options = makeOptions("POST");
-    return fetch(URL, options).then(handleHttpErrors);
+  const addRating = (imdbID, rating, username) => {
+    const options = makeOptions("POST", true, {
+      user: username,
+      rating: rating,
+      movieID: imdbID
+
+    });
+    return fetch(URLS.AddRating(), options).then(handleHttpErrors);
   };
 
-  const addReview = (URL) => {
-    const options = makeOptions("POST");
-    return fetch(URL, options).then(handleHttpErrors);
+  const addReview = (imdbID, review, username) => {
+    const options = makeOptions("POST", true, {
+      user: username,
+      review: review,
+      movieID: imdbID
+
+    });
+    return fetch(URLS.AddReview(), options).then(handleHttpErrors);
   };
 
   const registerUser = (

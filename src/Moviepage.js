@@ -6,7 +6,7 @@ import facade from "./apiFacade";
 import URLs from "./Settings";
 import star from "./Yellow_star.svg";
 
-export function MoviePage() {
+export function MoviePage({username}) {
   let { imdbID } = useParams();
   const [movie, setMovie] = useState("Loading...");
   useEffect(() => {
@@ -43,7 +43,7 @@ export function MoviePage() {
       <div className="movieplot">{movie.Plot}</div>
       <div className="moviepictures">More pictures</div>
       <div className="reviewcontainer">
-        {movie.review !== undefined && ShowReviews(movie.review, imdbID)}
+        {movie.review !== undefined && ShowReviews(movie.review, movie.rating, imdbID, username)}
       </div>
     </div>
   );
@@ -104,20 +104,31 @@ function InfoTable({ movie }) {
   );
 }
 
-function ShowReviews(reviewArray, imdbID) {
+function ShowReviews(reviewArray, ratingArray, imdbID, username) {
+  const getRating = (username) => {
+    return ratingArray.find(x => x.user === username).rating;
+  };
+
   return (
     <>
       <div className="review">
-        <RatingReviewModal imdbID={imdbID} />
+        {username !== undefined && <RatingReviewModal imdbID={imdbID} username={username}/>}
         <h3>User reviews: </h3>
+        {username === undefined && <p>Login to make review and rating</p>}
       </div>
       {reviewArray.length !== 0 ? (
         <div className="flex-container baseline">
           {reviewArray.map((element) => (
             <div className="reviewCard" key={element.id}>
               <p>
-                <b>USERNAME</b>
+              {element.user !== undefined ? <b>{element.user}</b> : <b>-Anonymous-</b>}
               </p>
+              {getRating(element.user)}/10
+												<img
+													src={star}
+													className="ratingStarTable"
+													alt="star"
+												/>
               <p>{element.review}</p>
             </div>
           ))}
@@ -129,7 +140,7 @@ function ShowReviews(reviewArray, imdbID) {
   );
 }
 
-function RatingReviewModal({ imdbID }) {
+function RatingReviewModal({ imdbID, username }) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState();
@@ -146,8 +157,8 @@ function RatingReviewModal({ imdbID }) {
   const handleShow = () => setShow(true);
   const handleSubmit = (event) => {
     event.preventDefault();
-    facade.addRating(URLs.AddRating(imdbID, rating));
-    facade.addReview(URLs.AddReview(imdbID, review));
+    facade.addRating(imdbID, rating, username);
+    facade.addReview(imdbID, review, username);
     handleClose();
   };
 
