@@ -34,6 +34,31 @@ function URLS() {
     return URL;
   }
 
+  function EditRating() {
+    const URL =
+      "https://carolinehoeg.com/semesterprojekt/api/movies/edit/rating/"
+    return URL;
+  }
+
+  function EditReview() {
+    const URL =
+      "https://carolinehoeg.com/semesterprojekt/api/movies/edit/review/"
+    return URL;
+  }
+
+  function DeleteRating() {
+    const URL =
+      "https://carolinehoeg.com/semesterprojekt/api/movies/delete/rating/"
+    return URL;
+  }
+
+  function DeleteReview() {
+    const URL =
+      "https://carolinehoeg.com/semesterprojekt/api/movies/delete/review/"
+    return URL;
+  }
+
+
   function SpecificMovie(id) {
     const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/" + id;
     return URL;
@@ -57,6 +82,10 @@ function URLS() {
     Search,
     AddRating,
     AddReview,
+    EditRating,
+    EditReview,
+    DeleteRating,
+    DeleteReview,
     Register,
   };
 }

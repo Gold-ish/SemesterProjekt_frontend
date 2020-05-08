@@ -53,6 +53,28 @@ function apiFacade() {
     return fetch(URLS.AddRating(), options).then(handleHttpErrors);
   };
 
+  const editRating = (imdbID, rating, username, ID) => {
+    const options = makeOptions("PUT", true, {
+      user: username,
+      rating: rating,
+      movieID: imdbID,
+      id: ID
+
+    });
+    return fetch(URLS.EditRating(), options).then(handleHttpErrors);
+  };
+
+  const deleteRating = (imdbID, rating, username, ID) => {
+    const options = makeOptions("DELETE", true, {
+      user: username,
+      rating: rating,
+      movieID: imdbID,
+      id: ID
+
+    });
+    return fetch(URLS.DeleteRating(), options).then(handleHttpErrors);
+  };
+
   const addReview = (imdbID, review, username) => {
     const options = makeOptions("POST", true, {
       user: username,
@@ -61,6 +83,28 @@ function apiFacade() {
 
     });
     return fetch(URLS.AddReview(), options).then(handleHttpErrors);
+  };
+
+  const editReview = (imdbID, review, username, ID) => {
+    const options = makeOptions("PUT", true, {
+      user: username,
+      review: review,
+      movieID: imdbID,
+      id: ID
+
+    });
+    return fetch(URLS.EditReview(), options).then(handleHttpErrors);
+  };
+
+  const deleteReview = (imdbID, review, username, ID) => {
+    const options = makeOptions("DELETE", true, {
+      user: username,
+      review: review,
+      movieID: imdbID,
+      id: ID
+
+    });
+    return fetch(URLS.DeleteReview(), options).then(handleHttpErrors);
   };
 
   const registerUser = (
@@ -113,6 +157,10 @@ function apiFacade() {
     fetchData,
     addRating,
     addReview,
+    editRating,
+    editReview,
+    deleteRating,
+    deleteReview,
     registerUser,
   };
 }

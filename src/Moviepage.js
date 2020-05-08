@@ -6,7 +6,7 @@ import facade from "./apiFacade";
 import URLs from "./Settings";
 import star from "./Yellow_star.svg";
 
-export function MoviePage({username}) {
+export function MoviePage({ username }) {
   let { imdbID } = useParams();
   const [movie, setMovie] = useState("Loading...");
   useEffect(() => {
@@ -105,33 +105,60 @@ function InfoTable({ movie }) {
 }
 
 function ShowReviews(reviewArray, ratingArray, imdbID, username) {
+  let ownReview = {id: undefined, review: undefined, rating: undefined}
+
+  let idididi = reviewArray.find(x => x.user === username);
+  if(idididi !== undefined) {ownReview.id = idididi.id}
+  let reviewtext = reviewArray.find(x => x.user === username);
+  if(reviewtext !== undefined) {ownReview.review = reviewtext.review}
+  let ratingText = ratingArray.find(x => x.user === username);
+  if(ratingText !== undefined) {ownReview.rating = ratingText.rating}
+
   const getRating = (username) => {
     return ratingArray.find(x => x.user === username).rating;
   };
 
+  function MoveOwnReviewToFirstPosition(array, username) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].props.children[0].key === username) {
+        var a = array.splice(i, 1);   // removes the item
+        array.unshift(a[0]);         // adds it back to the beginning
+        break;
+      }
+    }
+    return array;
+  }
+
   return (
     <>
       <div className="review">
-        {username !== undefined && <RatingReviewModal imdbID={imdbID} username={username}/>}
+        {username !== undefined && ownReview.id ===undefined &&  <RatingReviewModal imdbID={imdbID} username={username} />}
+        {username !== undefined && ownReview.id !== undefined && <EditRatingReviewModal
+         imdbID={imdbID}
+         username={username}
+         reviewProp={ownReview.review}
+         ratingProp={ownReview.rating}
+         ID={ownReview.id} />
+         }
         <h3>User reviews: </h3>
         {username === undefined && <p>Login to make review and rating</p>}
       </div>
       {reviewArray.length !== 0 ? (
         <div className="flex-container baseline">
-          {reviewArray.map((element) => (
+          {MoveOwnReviewToFirstPosition(reviewArray.map((element) => (
             <div className="reviewCard" key={element.id}>
-              <p>
-              {element.user !== undefined ? <b>{element.user}</b> : <b>-Anonymous-</b>}
+              <p key = {element.user}>
+                {element.user !== undefined ? <b>{element.user}</b> : <b>-Anonymous-</b>}
               </p>
               {getRating(element.user)}/10
-												<img
-													src={star}
-													className="ratingStarTable"
-													alt="star"
-												/>
+              <img
+                src={star}
+                className="ratingStarTable"
+                alt="star"
+              />
               <p>{element.review}</p>
             </div>
-          ))}
+          )),username)}
         </div>
       ) : (
           <h5>Be the first one to write a review!</h5>
@@ -198,34 +225,115 @@ function RatingReviewModal({ imdbID, username }) {
   );
 }
 
-function Stars({ setIsBlocking, setRating }) {
+function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, ID }) {
+  const [show, setShow] = useState(false);
+  const [rating, setRating] = useState(ratingProp);
+  const [review, setReview] = useState(reviewProp);
+  const [isBlocking, setIsBlocking] = useState(false);
+  const [buttonPress, setButtonPress] = useState();
+
+  const handleClose = () => {
+    if (isBlocking) {
+      alert("Are you sure you want to discard your review?");
+      setIsBlocking(false);
+    } else {
+      setShow(false);
+    }
+  };
+  const handleShow = () => setShow(true);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if(buttonPress === "edit"){
+      console.log(imdbID + rating + username + ID)
+      facade.editRating(imdbID, rating, username,ID);
+      facade.editReview(imdbID, review, username,ID);
+    }else if(buttonPress === "delete"){
+      facade.deleteRating(imdbID, rating, username,ID);
+      facade.deleteReview(imdbID, review, username,ID);
+    }
+    handleClose();
+  };
+
+  return (
+    <>
+      <Button onClick={handleShow} className="right">
+        Edit Rating and Review
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Rating and Review</Modal.Title>
+        </Modal.Header>
+        <form onSubmit={handleSubmit}>
+          <Modal.Body>
+            <Stars setIsBlocking={setIsBlocking} setRating={setRating} rating={rating} />
+            <br /> <br />
+            <h5>Add you review: </h5>
+            <textarea
+              className="reviewInput"
+              onChange={(event) => {
+                setIsBlocking(event.target.value.length > 0);
+                setReview(event.target.value);
+              }}
+            >{review}</textarea>
+          </Modal.Body>
+          <Modal.Footer>
+          <input
+              name="delete"
+              type="submit"
+              value="delete"
+              onClick={() => {
+                setButtonPress("delete")
+                setIsBlocking(false)
+                }}
+            />
+            <input
+              name="edit"
+              type="submit"
+              value="edit"
+              onClick={() => {
+                setButtonPress("edit")
+                setIsBlocking(false)
+                }}
+            />
+          </Modal.Footer>
+        </form>
+      </Modal>
+    </>
+  );
+}
+
+function Stars({ setIsBlocking, setRating, rating }) {
+
   return (
     <fieldset
       className="rating"
       onChange={(event) => {
         setRating(event.target.value);
+        console.log(event.target.value);
         setIsBlocking(true);
       }}
     >
-      <input type="radio" id="star10" name="rating" value="10" />
+      <input type="radio" id="star10" name="rating" value="10" checked={rating === 10}/>
       <label className="full" htmlFor="star10"></label>
-      <input type="radio" id="star9" name="rating" value="9" />
+      <input type="radio" id="star9" name="rating" value="9" checked={rating === 9} />
       <label className="full" htmlFor="star9"></label>
-      <input type="radio" id="star8" name="rating" value="8" />
+      <input type="radio" id="star8" name="rating" value="8" checked={rating === 8}/>
       <label className="full" htmlFor="star8"></label>
-      <input type="radio" id="star7" name="rating" value="7" />
+      <input type="radio" id="star7" name="rating" value="7" checked={rating === 7}/>
       <label className="full" htmlFor="star7"></label>
-      <input type="radio" id="star6" name="rating" value="6" />
+      <input type="radio" id="star6" name="rating" value="6" checked={rating === 6}/>
       <label className="full" htmlFor="star6"></label>
-      <input type="radio" id="star5" name="rating" value="5" />
+      <input type="radio" id="star5" name="rating" value="5" checked={rating === 5}/>
       <label className="full" htmlFor="star5"></label>
-      <input type="radio" id="star4" name="rating" value="4" />
+      <input type="radio" id="star4" name="rating" value="4" checked={rating === 4}/>
       <label className="full" htmlFor="star4"></label>
-      <input type="radio" id="star3" name="rating" value="3" />
+      <input type="radio" id="star3" name="rating" value="3" checked={rating === 3} />
       <label className="full" htmlFor="star3"></label>
-      <input type="radio" id="star2" name="rating" value="2" />
+      <input type="radio" id="star2" name="rating" value="2" checked={rating === 2}/>
       <label className="full" htmlFor="star2"></label>
-      <input type="radio" id="star1" name="rating" value="1" />
+      <input type="radio" id="star1" name="rating" value="1" checked={rating === 1}/>
       <label className="full" htmlFor="star1"></label>
     </fieldset>
   );

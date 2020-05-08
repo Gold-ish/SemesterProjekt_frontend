@@ -19,6 +19,7 @@ export function SearchPage({ searchString }) {
   useEffect(() => {
     facade.fetchData(URLS.Search(searchString, "1")).then(
       (data) => {
+        setCatchError("");
         setTotalResult(data.totalResults);
         setMovieList(data.movieDTOs);
       },
