@@ -28,7 +28,7 @@ export function MovieTable ({ movies }) {
 					<tbody>
 						{movies.map((movie) => {
 							return (
-								<tr key={movie.imdbID} onClick={() => history.push("/moviepage/"+movie.imdbID)}>
+								<tr className="clickable" key={movie.imdbID} onClick={() => history.push("/moviepage/"+movie.imdbID)}>
 									<td>
 										<div className="movieTableContent">
 											<h2>

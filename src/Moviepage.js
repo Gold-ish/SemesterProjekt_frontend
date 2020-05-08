@@ -52,6 +52,7 @@ export function MoviePage({ username }) {
 function InfoTable({ movie }) {
   return (
     <table className="movieInfo">
+    <thead>
       <tr>
         <td className="right bold">Year:</td>
         <td>{movie.Year}</td>
@@ -100,6 +101,7 @@ function InfoTable({ movie }) {
         <td className="right bold">Production:</td>
         <td>{movie.Production}</td>
       </tr>
+      </thead>
     </table>
   );
 }
@@ -140,8 +142,9 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
          ratingProp={ownReview.rating}
          ID={ownReview.id} />
          }
+        {username === undefined && <p className="right blue"><b>Login to make review and rating</b></p>}
         <h3>User reviews: </h3>
-        {username === undefined && <p>Login to make review and rating</p>}
+        
       </div>
       {reviewArray.length !== 0 ? (
         <div className="flex-container baseline">
