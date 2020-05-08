@@ -163,6 +163,10 @@ label {
 	color: red;
 }
 
+.clickable {
+	cursor: pointer;
+}
+
 .reviewCard {
 	padding: 0.01em 16px;
 	margin-top: 16px;

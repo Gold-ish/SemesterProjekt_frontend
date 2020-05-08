@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import facade from "./apiFacade";
 import URLS from "./Settings";
 
@@ -12,80 +13,49 @@ export function UserPage() {
 }
 
 function UserFetch() {
-  const [dataFromServer, setDataFromServer] = useState("Loading...");
+  const [userData, setUserData] = useState("Loading...");
+
   useEffect(() => {
-    facade.fetchData(URLS.User()).then((data) => setDataFromServer(data.msg));
+    facade.fetchData(URLS.User()).then((data) => { setUserData(data); console.log(data); });
   }, []);
 
-  let destructuredFetchData = {
-    username: "testUserName",
-    password: "testPassword",
-    birthday: "testDate",
-    gender: "testGender",
-    reviews: [
-      {
-        id: 8,
-        movieID: "ttkj3kd",
-        review: "this movie is super good",
-        username: "testUserName",
-        rating: {
-          id: 8,
-          movieID: "ttkj3kd",
-          rating: 8,
-          username: "testUserName",
-        },
-      },
-      {
-        id: 26,
-        movieID: "tt5de5dp",
-        review: "abdc bad review",
-        username: "randomusername",
-        rating: {
-          id: 8,
-          movieID: "ttkj3kd",
-          rating: 8,
-          username: "testUserName",
-        },
-      },
-    ],
-  };
-  const { username, birthday, gender, reviews } = destructuredFetchData;
+  const { username, birthday, gender, reviews } = userData;
+
   return (
     <div className="outer">
       <UserStats
-        dataFromServer={dataFromServer}
         username={username}
         birthday={birthday}
         gender={gender}
       />
-      <UserReviewRating dataFromServer={dataFromServer} reviews={reviews} />
+      <UserReviewRating reviews={reviews} username={username} />
     </div>
   );
 }
 
-function UserStats(props) {
+function UserStats({ username, birthday, gender }) {
   return (
     <div>
-      <h3>{props.dataFromServer}</h3>
+      <h3>{username}</h3>
       <table align="center" border="1">
         <thead>
           <tr>
             <th>
               <p>Username:</p>
             </th>
-            <td>{props.username}</td>
+            <td>{username}</td>
           </tr>
           <tr>
             <th>
               <p>Birthday:</p>
             </th>
-            <td>{props.birthday}</td>
+            <td>{birthday}</td>
           </tr>
           <tr>
             <th>
               <p>Gender:</p>
             </th>
-            <td>{props.gender}</td>
+            <td>{gender}</td>
           </tr>
         </thead>
       </table>
@@ -97,33 +67,34 @@ function UserStats(props) {
   );
 }
 
-function UserReviewRating(props) {
+function UserReviewRating({ reviews, username }) {
   return (
-    <div>
-      <br />
-      <h3>My reviews and Ratings</h3>
-      {props.reviews.map((element) => {
-        return (
-          <table align="center" border="1" key={props.reviews.indexOf(element)}>
-            <thead>
-              <tr>
-                <th>
-                  <p>Potentially the movies name here: {element.movieID}</p>
-                  <br />
-                  <p>Personal rating: {element.rating.rating}</p>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p>{element.review}</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        );
-      })}
+    <div className="reviewcontainer">
+      {reviews !== undefined && ShowReviews(reviews, username)}
     </div>
+  );
+}
+
+function ShowReviews(reviewArray, username) {
+  let history = useHistory();
+
+  return (
+    <>
+      <br />
+      {reviewArray.length !== 0 ? (
+        <div className="flex-container baseline">
+          {reviewArray.map((element) => (
+            <div className="reviewCard clickable" key={element.id} onClick={() => history.push("/moviepage/" + element.movieID)}>
+              <p>
+                <b>{username}</b>
+              </p>
+              <p>{element.review}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+          <h5>Search for a movie and leave your first review!</h5>
+        )}
+    </>
   );
 }

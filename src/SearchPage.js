@@ -7,6 +7,7 @@ import Pagination from "./Pagination";
 export function SearchPage({ searchString }) {
   const [movieList, setMovieList] = useState();
   const [totalResult, setTotalResult] = useState(0);
+  const [catchError, setCatchError] = useState("");
   const [page, setPage] = useState(1);
 
   function changePage(pageNumber) {
@@ -16,10 +17,17 @@ export function SearchPage({ searchString }) {
   }
 
   useEffect(() => {
-    facade.fetchData(URLS.Search(searchString, "1")).then((data) => {
-      setTotalResult(data.totalResults);
-      setMovieList(data.movieDTOs);
-    });
+    facade.fetchData(URLS.Search(searchString, "1")).then(
+      (data) => {
+        setTotalResult(data.totalResults);
+        setMovieList(data.movieDTOs);
+      },
+      (rejected) => {
+        if (rejected.status) {
+          rejected.fullError.then((error) => setCatchError(error.message));
+        }
+      }
+    );
     setPage(1);
   }, [searchString]);
 
@@ -27,6 +35,7 @@ export function SearchPage({ searchString }) {
     <div>
       <br />
       <h2>Search Result</h2>
+      {catchError !== undefined && <h3 className="errorMsg">{catchError}</h3>}
       {movieList !== undefined && <MovieTable movies={movieList} />}
       {
         <Pagination
