@@ -162,6 +162,9 @@ label {
 .errorMsg {
 	color: red;
 }
+.blue {
+	color: #069;
+}
 
 .clickable {
 	cursor: pointer;

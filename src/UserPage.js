@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { EditUser } from './EditUser';
+import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
 import URLS from "./Settings";
 import star from "./Yellow_star.svg";
@@ -35,6 +37,11 @@ function UserFetch() {
 }
 
 function UserStats({ username, birthday, gender }) {
+  const deleteUser = () => {
+    alert("Are you sure you would like to delete this user?");
+    //FETCH KALD HER
+  }
+
   return (
     <div>
       <h3>{username}</h3>
@@ -60,6 +67,10 @@ function UserStats({ username, birthday, gender }) {
           </tr>
         </thead>
       </table>
+      <EditUser username={username} gender={gender} birthday={birthday} />
+      <Button onClick={deleteUser}>
+                Delete user
+        </Button>
       {/* 
       INSERT USER PICTURE OR DEFAULT PIC THING.
       Let them stand side by side with the table info
@@ -91,7 +102,7 @@ function ShowReviews(reviewArray, ratingArray) {
         <div className="flex-container baseline">
           {reviewArray.map((element) => (
             <div className="reviewCard clickable" key={element.id} onClick={() => history.push("/moviepage/" + element.movieID)}>
-              <h3>{FetchMovie(element.movieID)}</h3>
+              <h5>{FetchMovie(element.movieID)}</h5>
               <p>{getRating(element.movieID)}/10
 												<img
                   src={star}
