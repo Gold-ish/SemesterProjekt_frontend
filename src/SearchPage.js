@@ -17,32 +17,25 @@ export function SearchPage({ searchString }) {
   }
 
   useEffect(() => {
-    facade
-      .fetchData(URLS.Search(searchString, "1"))
-      .then(
-        (data) => {
-          setTotalResult(data.totalResults);
-          setMovieList(data.movieDTOs);
+    facade.fetchData(URLS.Search(searchString, "1")).then(
+      (data) => {
+        setTotalResult(data.totalResults);
+        setMovieList(data.movieDTOs);
+      },
+      (rejected) => {
+        if (rejected.status) {
+          rejected.fullError.then((error) => setCatchError(error.message));
         }
-        // ,
-        // (rejected) => {
-        //   const error = rejected;
-        //   error.then((error) => setCatchError(error));
-        //   console.log(catchError);
-
-        //   // let error = Promise.resolve(rejected);
-        //   // console.log(error);
-        // }
-      )
-      .catch((error) => setCatchError(error));
+      }
+    );
     setPage(1);
   }, [searchString]);
 
   return (
     <div>
-      {/* {catchError !== undefined && console.log(catchError.fullError)} */}
       <br />
       <h2>Search Result</h2>
+      {catchError !== undefined && <h3 className="errorMsg">{catchError}</h3>}
       {movieList !== undefined && <MovieTable movies={movieList} />}
       {
         <Pagination
