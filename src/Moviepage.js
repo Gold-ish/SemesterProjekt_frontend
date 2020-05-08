@@ -123,8 +123,8 @@ function ShowReviews(reviewArray, imdbID) {
           ))}
         </div>
       ) : (
-        <h5>Be the first one to write a review!</h5>
-      )}
+          <h5>Be the first one to write a review!</h5>
+        )}
     </>
   );
 }
