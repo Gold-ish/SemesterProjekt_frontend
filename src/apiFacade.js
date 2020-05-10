@@ -131,6 +131,34 @@ function apiFacade() {
       });
   };
 
+  const editUser = (user, gender,
+    birthday,
+    setUsername,
+    setRoles) => {
+    const options = makeOptions("PUT", false, {
+      username: user,
+      gender: gender,
+      birthday: birthday
+    });
+    return fetch(URLS.EditUser(), options)
+    .then(handleHttpErrors)
+    .then((res) => {
+      setUsername(res.username);
+      setRoles(res.role);
+    });
+  }
+
+  const deleteUser = (user, gender,
+    birthday) => {
+      const options = makeOptions("DELETE", false, {
+        username: user,
+        gender: gender,
+        birthday: birthday
+      });
+      return fetch(URLS.DeleteUser(), options)
+      .then(handleHttpErrors);
+  }
+
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -162,6 +190,8 @@ function apiFacade() {
     deleteRating,
     deleteReview,
     registerUser,
+    editUser,
+    deleteUser
   };
 }
 const facade = apiFacade();

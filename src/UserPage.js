@@ -6,16 +6,16 @@ import facade from "./apiFacade";
 import URLS from "./Settings";
 import star from "./Yellow_star.svg";
 
-export function UserPage() {
+export function UserPage({ isLoggedIn, setLoginStatus }) {
   return (
     <div>
       <br />
-      {UserFetch()}
+      {UserFetch({ isLoggedIn, setLoginStatus })}
     </div>
   );
 }
 
-function UserFetch() {
+function UserFetch({ isLoggedIn, setLoginStatus }) {
   const [userData, setUserData] = useState("Loading...");
 
   useEffect(() => {
@@ -30,16 +30,22 @@ function UserFetch() {
         username={username}
         birthday={birthday}
         gender={gender}
+        isLoggedIn={isLoggedIn}
+        setLoginStatus={setLoginStatus}
       />
-      <UserReviewRating reviews={reviews} ratings={ratings} />
+      <UserReviewRating reviews={reviews} ratings={ratings} setUserData={setUserData} />
     </div>
   );
 }
 
-function UserStats({ username, birthday, gender }) {
+function UserStats({ username, birthday, gender, setUserData, isLoggedIn, setLoginStatus }) {
+  let history = useHistory();
   const deleteUser = () => {
     alert("Are you sure you would like to delete this user?");
-    //FETCH KALD HER
+    facade.deleteUser(username, gender, birthday).then(() => {
+      setLoginStatus(!isLoggedIn);
+      history.push("/login-out");
+    });
   }
 
   return (
@@ -67,9 +73,9 @@ function UserStats({ username, birthday, gender }) {
           </tr>
         </thead>
       </table>
-      <EditUser username={username} gender={gender} birthday={birthday} />
+      <EditUser username={username} gender={gender} birthday={birthday} setUserData={setUserData} />
       <Button onClick={deleteUser}>
-                Delete user
+        Delete user
         </Button>
       {/* 
       INSERT USER PICTURE OR DEFAULT PIC THING.

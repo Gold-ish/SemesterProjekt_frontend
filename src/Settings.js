@@ -24,45 +24,57 @@ function URLS() {
 
   function AddRating() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/add/rating/"
+      "https://carolinehoeg.com/semesterprojekt/api/movies/add/rating/";
     return URL;
   }
 
   function AddReview() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/add/review/"
+      "https://carolinehoeg.com/semesterprojekt/api/movies/add/review/";
     return URL;
   }
 
   function EditRating() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/edit/rating/"
+      "https://carolinehoeg.com/semesterprojekt/api/movies/edit/rating/";
     return URL;
   }
 
   function EditReview() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/edit/review/"
+      "https://carolinehoeg.com/semesterprojekt/api/movies/edit/review/";
+    return URL;
+  }
+
+  function EditUser() {
+    const URL =
+      "https://carolinehoeg.com/semesterprojekt/api/info/user/edit";
     return URL;
   }
 
   function DeleteRating() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/delete/rating/"
+      "https://carolinehoeg.com/semesterprojekt/api/movies/delete/rating/";
     return URL;
   }
 
   function DeleteReview() {
     const URL =
-      "https://carolinehoeg.com/semesterprojekt/api/movies/delete/review/"
+      "https://carolinehoeg.com/semesterprojekt/api/movies/delete/review/";
     return URL;
   }
 
+  function DeleteUser() {
+    const URL =
+      "https://carolinehoeg.com/semesterprojekt/api/info/user/delete";
+    return URL;
+  }
 
   function SpecificMovie(id) {
     const URL = "https://carolinehoeg.com/semesterprojekt/api/movies/" + id;
     return URL;
   }
+
   function Search(title, page) {
     let formattedTitle = title.split(" ").join("+");
     const URL =
@@ -87,6 +99,8 @@ function URLS() {
     DeleteRating,
     DeleteReview,
     Register,
+    EditUser,
+    DeleteUser
   };
 }
 export default new URLS();

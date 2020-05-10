@@ -36,12 +36,13 @@ export default function App() {
 						<SearchPage searchString={searchResult.toString()} />
 					</Route>
 					<Route path={`/moviepage/:imdbID`}>
-						<MoviePage 
+						<MoviePage
 							username={username}
 						/>
 					</Route>
 					<Route exact path="/user">
-						<UserPage />
+						<UserPage isLoggedIn={isLoggedIn}
+							setLoginStatus={setLoginStatus} />
 					</Route>
 					<Route exact path="/admin">
 						<Admin />

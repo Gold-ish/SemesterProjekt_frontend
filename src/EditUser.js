@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
-import URLs from "./Settings";
 
-export function EditUser({ username, gender, birthday }) {
+export function EditUser({ username, gender, birthday, setUserData }) {
     const [show, setShow] = useState(false);
     const [isBlocking, setIsBlocking] = useState(false);
     const [newUsername, setNewUsername] = useState();
@@ -22,10 +21,7 @@ export function EditUser({ username, gender, birthday }) {
     const handleShow = () => setShow(true);
     const handleSubmit = (event) => {
         event.preventDefault();
-        //FACADE KALD HER!
-        console.log(newUsername);
-        console.log(newGender);
-        console.log(newBirthday);
+        facade.editUser(newUsername, newGender, newBirthday).then((data) => setUserData(data));
         handleClose();
     };
 
