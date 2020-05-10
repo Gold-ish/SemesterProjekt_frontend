@@ -30,10 +30,11 @@ function UserFetch({ isLoggedIn, setLoginStatus }) {
         username={username}
         birthday={birthday}
         gender={gender}
+        setUserData={setUserData}
         isLoggedIn={isLoggedIn}
         setLoginStatus={setLoginStatus}
       />
-      <UserReviewRating reviews={reviews} ratings={ratings} setUserData={setUserData} />
+      <UserReviewRating reviews={reviews} ratings={ratings} />
     </div>
   );
 }

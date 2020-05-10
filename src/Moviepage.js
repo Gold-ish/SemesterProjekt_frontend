@@ -10,9 +10,13 @@ export function MoviePage({ username }) {
   let { imdbID } = useParams();
   const [movie, setMovie] = useState("Loading...");
   useEffect(() => {
-    facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
-      setMovie(data);
-    });
+    let shouldFetch = true;
+    if (shouldFetch) {
+      facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
+        setMovie(data);
+      });
+    }
+    return () => shouldFetch = false;
   }, [imdbID]);
 
   const showAvgRating = (movie) => {
@@ -52,69 +56,69 @@ export function MoviePage({ username }) {
 function InfoTable({ movie }) {
   return (
     <table className="movieInfo">
-    <thead>
-      <tr>
-        <td className="right bold">Year:</td>
-        <td>{movie.Year}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Rated:</td>
-        <td>{movie.Rated}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Released:</td>
-        <td>{movie.Released}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Runtime:</td>
-        <td>{movie.Runtime}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Genre:</td>
-        <td>{movie.Genre}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Director:</td>
-        <td>{movie.Director}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Actors:</td>
-        <td>{movie.Actors}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Language:</td>
-        <td>{movie.Language}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Awards:</td>
-        <td>{movie.Awards}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Type:</td>
-        <td>{movie.Type}</td>
-      </tr>
-      <tr>
-        <td className="right bold">DVD release:</td>
-        <td>{movie.DVD}</td>
-      </tr>
-      <tr>
-        <td className="right bold">Production:</td>
-        <td>{movie.Production}</td>
-      </tr>
+      <thead>
+        <tr>
+          <td className="right bold">Year:</td>
+          <td>{movie.Year}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Rated:</td>
+          <td>{movie.Rated}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Released:</td>
+          <td>{movie.Released}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Runtime:</td>
+          <td>{movie.Runtime}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Genre:</td>
+          <td>{movie.Genre}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Director:</td>
+          <td>{movie.Director}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Actors:</td>
+          <td>{movie.Actors}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Language:</td>
+          <td>{movie.Language}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Awards:</td>
+          <td>{movie.Awards}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Type:</td>
+          <td>{movie.Type}</td>
+        </tr>
+        <tr>
+          <td className="right bold">DVD release:</td>
+          <td>{movie.DVD}</td>
+        </tr>
+        <tr>
+          <td className="right bold">Production:</td>
+          <td>{movie.Production}</td>
+        </tr>
       </thead>
     </table>
   );
 }
 
 function ShowReviews(reviewArray, ratingArray, imdbID, username) {
-  let ownReview = {id: undefined, review: undefined, rating: undefined}
+  let ownReview = { id: undefined, review: undefined, rating: undefined }
 
   let idididi = reviewArray.find(x => x.user === username);
-  if(idididi !== undefined) {ownReview.id = idididi.id}
+  if (idididi !== undefined) { ownReview.id = idididi.id }
   let reviewtext = reviewArray.find(x => x.user === username);
-  if(reviewtext !== undefined) {ownReview.review = reviewtext.review}
+  if (reviewtext !== undefined) { ownReview.review = reviewtext.review }
   let ratingText = ratingArray.find(x => x.user === username);
-  if(ratingText !== undefined) {ownReview.rating = ratingText.rating}
+  if (ratingText !== undefined) { ownReview.rating = ratingText.rating }
 
   const getRating = (username) => {
     return ratingArray.find(x => x.user === username).rating;
@@ -134,23 +138,23 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
   return (
     <>
       <div className="review">
-        {username !== undefined && ownReview.id ===undefined &&  <RatingReviewModal imdbID={imdbID} username={username} />}
+        {username !== undefined && ownReview.id === undefined && <RatingReviewModal imdbID={imdbID} username={username} />}
         {username !== undefined && ownReview.id !== undefined && <EditRatingReviewModal
-         imdbID={imdbID}
-         username={username}
-         reviewProp={ownReview.review}
-         ratingProp={ownReview.rating}
-         ID={ownReview.id} />
-         }
+          imdbID={imdbID}
+          username={username}
+          reviewProp={ownReview.review}
+          ratingProp={ownReview.rating}
+          ID={ownReview.id} />
+        }
         {username === undefined && <p className="right blue"><b>Login to make review and rating</b></p>}
         <h3>User reviews: </h3>
-        
+
       </div>
       {reviewArray.length !== 0 ? (
         <div className="flex-container baseline">
           {MoveOwnReviewToFirstPosition(reviewArray.map((element) => (
             <div className="reviewCard" key={element.id}>
-              <p key = {element.user}>
+              <p key={element.user}>
                 {element.user !== undefined ? <b>{element.user}</b> : <b>-Anonymous-</b>}
               </p>
               {getRating(element.user)}/10
@@ -161,7 +165,7 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
               />
               <p>{element.review}</p>
             </div>
-          )),username)}
+          )), username)}
         </div>
       ) : (
           <h5>Be the first one to write a review!</h5>
@@ -247,13 +251,13 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, ID })
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(buttonPress === "edit"){
+    if (buttonPress === "edit") {
       console.log(imdbID + rating + username + ID)
-      facade.editRating(imdbID, rating, username,ID);
-      facade.editReview(imdbID, review, username,ID);
-    }else if(buttonPress === "delete"){
-      facade.deleteRating(imdbID, rating, username,ID);
-      facade.deleteReview(imdbID, review, username,ID);
+      facade.editRating(imdbID, rating, username, ID);
+      facade.editReview(imdbID, review, username, ID);
+    } else if (buttonPress === "delete") {
+      facade.deleteRating(imdbID, rating, username, ID);
+      facade.deleteReview(imdbID, review, username, ID);
     }
     handleClose();
   };
@@ -282,14 +286,14 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, ID })
             >{review}</textarea>
           </Modal.Body>
           <Modal.Footer>
-          <input
+            <input
               name="delete"
               type="submit"
               value="delete"
               onClick={() => {
                 setButtonPress("delete")
                 setIsBlocking(false)
-                }}
+              }}
             />
             <input
               name="edit"
@@ -298,7 +302,7 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, ID })
               onClick={() => {
                 setButtonPress("edit")
                 setIsBlocking(false)
-                }}
+              }}
             />
           </Modal.Footer>
         </form>
@@ -318,25 +322,25 @@ function Stars({ setIsBlocking, setRating, rating }) {
         setIsBlocking(true);
       }}
     >
-      <input type="radio" id="star10" name="rating" value="10" checked={rating === 10}/>
+      <input type="radio" id="star10" name="rating" value="10" />
       <label className="full" htmlFor="star10"></label>
-      <input type="radio" id="star9" name="rating" value="9" checked={rating === 9} />
+      <input type="radio" id="star9" name="rating" value="9" />
       <label className="full" htmlFor="star9"></label>
-      <input type="radio" id="star8" name="rating" value="8" checked={rating === 8}/>
+      <input type="radio" id="star8" name="rating" value="8" />
       <label className="full" htmlFor="star8"></label>
-      <input type="radio" id="star7" name="rating" value="7" checked={rating === 7}/>
+      <input type="radio" id="star7" name="rating" value="7" />
       <label className="full" htmlFor="star7"></label>
-      <input type="radio" id="star6" name="rating" value="6" checked={rating === 6}/>
+      <input type="radio" id="star6" name="rating" value="6" />
       <label className="full" htmlFor="star6"></label>
-      <input type="radio" id="star5" name="rating" value="5" checked={rating === 5}/>
+      <input type="radio" id="star5" name="rating" value="5" />
       <label className="full" htmlFor="star5"></label>
-      <input type="radio" id="star4" name="rating" value="4" checked={rating === 4}/>
+      <input type="radio" id="star4" name="rating" value="4" />
       <label className="full" htmlFor="star4"></label>
-      <input type="radio" id="star3" name="rating" value="3" checked={rating === 3} />
+      <input type="radio" id="star3" name="rating" value="3" />
       <label className="full" htmlFor="star3"></label>
-      <input type="radio" id="star2" name="rating" value="2" checked={rating === 2}/>
+      <input type="radio" id="star2" name="rating" value="2" />
       <label className="full" htmlFor="star2"></label>
-      <input type="radio" id="star1" name="rating" value="1" checked={rating === 1}/>
+      <input type="radio" id="star1" name="rating" value="1" />
       <label className="full" htmlFor="star1"></label>
     </fieldset>
   );

@@ -6,7 +6,7 @@ import facade from "./apiFacade";
 export function EditUser({ username, gender, birthday, setUserData }) {
     const [show, setShow] = useState(false);
     const [isBlocking, setIsBlocking] = useState(false);
-    const [newUsername, setNewUsername] = useState();
+    //const [newUsername, setNewUsername] = useState();
     const [newGender, setNewGender] = useState();
     const [newBirthday, setNewBirthday] = useState();
 
@@ -21,7 +21,7 @@ export function EditUser({ username, gender, birthday, setUserData }) {
     const handleShow = () => setShow(true);
     const handleSubmit = (event) => {
         event.preventDefault();
-        facade.editUser(newUsername, newGender, newBirthday).then((data) => setUserData(data));
+        facade.editUser(username, newGender, newBirthday).then((data) => setUserData(data));
         handleClose();
     };
 
@@ -36,14 +36,14 @@ export function EditUser({ username, gender, birthday, setUserData }) {
                 </Modal.Header>
                 <form onSubmit={handleSubmit}>
                     <Modal.Body>
-                        <p>Username:</p>
+                        {/* <p>Username:</p>
                         <input
                             type="text" defaultValue={username}
                             onChange={(event) => {
                                 setIsBlocking(event.target.value.length > 0);
                                 setNewUsername(event.target.value);
                             }}
-                        />
+                        /> */}
                         <br />
                         <p>Gender:</p>
                         <fieldset

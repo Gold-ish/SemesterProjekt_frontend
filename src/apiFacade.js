@@ -132,20 +132,14 @@ function apiFacade() {
   };
 
   const editUser = (user, gender,
-    birthday,
-    setUsername,
-    setRoles) => {
+    birthday) => {
     const options = makeOptions("PUT", false, {
       username: user,
       gender: gender,
       birthday: birthday
     });
     return fetch(URLS.EditUser(), options)
-    .then(handleHttpErrors)
-    .then((res) => {
-      setUsername(res.username);
-      setRoles(res.role);
-    });
+    .then(handleHttpErrors);
   }
 
   const deleteUser = (user, gender,
