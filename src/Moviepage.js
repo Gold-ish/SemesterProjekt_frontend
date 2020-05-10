@@ -111,12 +111,14 @@ function InfoTable({ movie }) {
 }
 
 function ShowReviews(reviewArray, ratingArray, imdbID, username) {
-  let ownReview = { id: undefined, review: undefined, rating: undefined }
+  let ownReview = { reviewid: undefined, ratingid: undefined, review: undefined, rating: undefined }
 
   let idididi = reviewArray.find(x => x.user === username);
-  if (idididi !== undefined) { ownReview.id = idididi.id }
+  if (idididi !== undefined) { ownReview.reviewid = idididi.id }
   let reviewtext = reviewArray.find(x => x.user === username);
   if (reviewtext !== undefined) { ownReview.review = reviewtext.review }
+  let idrating = ratingArray.find(x => x.user === username);
+  if (idrating !== undefined) { ownReview.ratingid = idrating.id }
   let ratingText = ratingArray.find(x => x.user === username);
   if (ratingText !== undefined) { ownReview.rating = ratingText.rating }
 
@@ -138,13 +140,15 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
   return (
     <>
       <div className="review">
-        {username !== undefined && ownReview.id === undefined && <RatingReviewModal imdbID={imdbID} username={username} />}
-        {username !== undefined && ownReview.id !== undefined && <EditRatingReviewModal
+        {username !== undefined && ownReview.reviewid === undefined && <RatingReviewModal imdbID={imdbID} username={username} />}
+        {username !== undefined && ownReview.reviewid !== undefined && <EditRatingReviewModal
           imdbID={imdbID}
           username={username}
           reviewProp={ownReview.review}
           ratingProp={ownReview.rating}
-          ID={ownReview.id} />
+          reviewID={ownReview.reviewid}
+          ratingID={ownReview.ratingid}  />
+
         }
         {username === undefined && <p className="right blue"><b>Login to make review and rating</b></p>}
         <h3>User reviews: </h3>
@@ -232,7 +236,7 @@ function RatingReviewModal({ imdbID, username }) {
   );
 }
 
-function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, ID }) {
+function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, reviewID, ratingID }) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(ratingProp);
   const [review, setReview] = useState(reviewProp);
@@ -252,12 +256,11 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, ID })
   const handleSubmit = (event) => {
     event.preventDefault();
     if (buttonPress === "edit") {
-      console.log(imdbID + rating + username + ID)
-      facade.editRating(imdbID, rating, username, ID);
-      facade.editReview(imdbID, review, username, ID);
+      facade.editRating(imdbID, rating, username, ratingID);
+      facade.editReview(imdbID, review, username, reviewID);
     } else if (buttonPress === "delete") {
-      facade.deleteRating(imdbID, rating, username, ID);
-      facade.deleteReview(imdbID, review, username, ID);
+      facade.deleteRating(imdbID, rating, username, ratingID);
+      facade.deleteReview(imdbID, review, username, reviewID);
     }
     handleClose();
   };
