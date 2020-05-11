@@ -153,6 +153,10 @@ function apiFacade() {
       .then(handleHttpErrors);
   }
 
+  const getMovieTrailer = (title) => {
+    return fetch(URLS.MovieTrailer(title)).then(handleHttpErrors);
+  }
+
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -185,7 +189,8 @@ function apiFacade() {
     deleteReview,
     registerUser,
     editUser,
-    deleteUser
+    deleteUser,
+    getMovieTrailer
   };
 }
 const facade = apiFacade();

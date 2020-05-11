@@ -48,9 +48,29 @@ export function MoviePage({ username }) {
       <div className="moviepictures">More pictures</div>
       <div className="reviewcontainer">
         {movie.review !== undefined && ShowReviews(movie.review, movie.rating, imdbID, username)}
+        {movie.Title !== undefined && ShowMovieTitle(movie.Title)}
       </div>
     </div>
   );
+}
+
+function ShowMovieTitle(title) {
+  const [trailer, setTrailer] = useState();
+
+  useEffect(() => {
+    let shouldFetch = true;
+    if (shouldFetch) {
+      facade.getMovieTrailer(title).then((data) => {
+        let trailerId = data.items[0].id.videoId;
+        console.log(trailerId);
+        setTrailer("https://www.youtube.com/watch?v=" + trailerId);
+        console.log(trailer);
+      });
+    }
+    return () => shouldFetch = false;
+  }, []);
+
+  return <div>hej</div>;
 }
 
 function InfoTable({ movie }) {
@@ -147,7 +167,7 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
           reviewProp={ownReview.review}
           ratingProp={ownReview.rating}
           reviewID={ownReview.reviewid}
-          ratingID={ownReview.ratingid}  />
+          ratingID={ownReview.ratingid} />
 
         }
         {username === undefined && <p className="right blue"><b>Login to make review and rating</b></p>}
