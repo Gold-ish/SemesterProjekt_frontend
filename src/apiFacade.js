@@ -153,8 +153,8 @@ function apiFacade() {
       .then(handleHttpErrors);
   }
 
-  const getMovieTrailer = (title) => {
-    return fetch(URLS.MovieTrailer(title)).then(handleHttpErrors);
+  const getMovieTrailer = (title, apiKey) => {
+    return fetch(URLS.MovieTrailer(title, apiKey)).then(handleHttpErrors);
   }
 
   const makeOptions = (method, addToken, body) => {

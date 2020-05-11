@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import facade from "./apiFacade";
 
-export function ShowMovieTrailer({ title }) {
+export function ShowMovieTrailer({ title, apiKey }) {
     const [trailer, setTrailer] = useState();
 
     useEffect(() => {
         let shouldFetch = true;
         if (shouldFetch) {
-            facade.getMovieTrailer(title).then((data) => {
+            facade.getMovieTrailer(title, apiKey).then((data) => {
                 let trailerId = data.items[0].id.videoId;
                 setTrailer("https://www.youtube.com/embed/" + trailerId);
             });

@@ -85,11 +85,11 @@ function URLS() {
     return URL;
   }
 
-  function MovieTrailer(title) {
+  function MovieTrailer(title, key) {
     let formattedTitle = title.split(" ").join("+");
     const URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
       formattedTitle +
-      "%20trailer&maxResults=1&key=AIzaSyCQYuA0lPDrnTZodP6U6mMFf5lENB6bb08";
+      "%20trailer&maxResults=1&key=" + key;
     return URL;
   }
 
@@ -108,7 +108,7 @@ function URLS() {
     DeleteReview,
     Register,
     EditUser,
-    DeleteUser, 
+    DeleteUser,
     MovieTrailer
   };
 }

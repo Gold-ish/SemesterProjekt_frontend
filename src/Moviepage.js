@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
 import URLs from "./Settings";
 import star from "./Yellow_star.svg";
+import { apiKey } from './Secret';
 
 export function MoviePage({ username }) {
   let { imdbID } = useParams();
@@ -50,7 +51,7 @@ export function MoviePage({ username }) {
       <div className="movietrailer">
         <br />
         <h5>Watch the trailer here!</h5>
-        {movie.Title !== undefined && <ShowMovieTrailer title={movie.Title} />}
+        {movie.Title !== undefined && <ShowMovieTrailer title={movie.Title} apiKey={apiKey} />}
         <br /><br />
       </div>
       <div className="reviewcontainer">
