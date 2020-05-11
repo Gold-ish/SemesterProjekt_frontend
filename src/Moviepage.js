@@ -48,7 +48,10 @@ export function MoviePage({ username }) {
       </div>
       <div className="movieplot">{movie.Plot}</div>
       <div className="movietrailer">
+        <br />
+        <h5>Watch the trailer here!</h5>
         {movie.Title !== undefined && <ShowMovieTrailer title={movie.Title} />}
+        <br /><br />
       </div>
       <div className="reviewcontainer">
         {movie.review !== undefined && ShowReviews(movie.review, movie.rating, imdbID, username)}

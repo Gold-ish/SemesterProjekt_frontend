@@ -141,6 +141,11 @@ label {
 	height: 150px;
 }
 
+.movieplot {
+	margin: auto;
+	width: 90%;
+}
+
 .ratingStar {
 	height: 20px;
 }
