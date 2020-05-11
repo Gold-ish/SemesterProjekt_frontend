@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { ShowMovieTrailer } from './ShowMovieTrailer';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
@@ -9,6 +10,7 @@ import star from "./Yellow_star.svg";
 export function MoviePage({ username }) {
   let { imdbID } = useParams();
   const [movie, setMovie] = useState("Loading...");
+
   useEffect(() => {
     let shouldFetch = true;
     if (shouldFetch) {
@@ -45,32 +47,14 @@ export function MoviePage({ username }) {
         </h5>
       </div>
       <div className="movieplot">{movie.Plot}</div>
-      <div className="moviepictures">More pictures</div>
+      <div className="movietrailer">
+        {movie.Title !== undefined && <ShowMovieTrailer title={movie.Title} />}
+      </div>
       <div className="reviewcontainer">
         {movie.review !== undefined && ShowReviews(movie.review, movie.rating, imdbID, username)}
-        {movie.Title !== undefined && ShowMovieTitle(movie.Title)}
       </div>
     </div>
   );
-}
-
-function ShowMovieTitle(title) {
-  const [trailer, setTrailer] = useState();
-
-  useEffect(() => {
-    let shouldFetch = true;
-    if (shouldFetch) {
-      facade.getMovieTrailer(title).then((data) => {
-        let trailerId = data.items[0].id.videoId;
-        console.log(trailerId);
-        setTrailer("https://www.youtube.com/watch?v=" + trailerId);
-        console.log(trailer);
-      });
-    }
-    return () => shouldFetch = false;
-  }, []);
-
-  return <div>hej</div>;
 }
 
 function InfoTable({ movie }) {
