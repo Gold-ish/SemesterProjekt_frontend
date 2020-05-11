@@ -138,7 +138,7 @@ function FetchMovie(movieId) {
       }
     });
     return () => shouldFetch = false;
-  }, []);
+  }, [movieId]);
 
   return movieTitle;
 }
