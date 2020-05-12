@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import MovieTable from "./MovieTable";
+import facade from "./apiFacade";
+import URLs from "./Settings";
 
 export function Home() {
 	const [movieList, setMovieList] = useState();
 
 	useEffect(() => {
-		//fetch kald her!
-		setMovieList(undefined);
-	}, [])
+		facade
+			.fetchData(URLs.TopTenMovies())
+			.then((data) => setMovieList(data.movieDTOs));
+	}, []);
 
 	return (
 		<div>
