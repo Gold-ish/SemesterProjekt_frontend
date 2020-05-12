@@ -47,8 +47,7 @@ function apiFacade() {
     const options = makeOptions("POST", true, {
       user: username,
       rating: rating,
-      movieID: imdbID
-
+      movieID: imdbID,
     });
     return fetch(URLS.AddRating(), options).then(handleHttpErrors);
   };
@@ -58,8 +57,7 @@ function apiFacade() {
       user: username,
       rating: rating,
       movieID: imdbID,
-      id: ID
-
+      id: ID,
     });
     return fetch(URLS.EditRating(), options).then(handleHttpErrors);
   };
@@ -69,8 +67,7 @@ function apiFacade() {
       user: username,
       rating: rating,
       movieID: imdbID,
-      id: ID
-
+      id: ID,
     });
     return fetch(URLS.DeleteRating(), options).then(handleHttpErrors);
   };
@@ -79,8 +76,7 @@ function apiFacade() {
     const options = makeOptions("POST", true, {
       user: username,
       review: review,
-      movieID: imdbID
-
+      movieID: imdbID,
     });
     return fetch(URLS.AddReview(), options).then(handleHttpErrors);
   };
@@ -90,8 +86,7 @@ function apiFacade() {
       user: username,
       review: review,
       movieID: imdbID,
-      id: ID
-
+      id: ID,
     });
     return fetch(URLS.EditReview(), options).then(handleHttpErrors);
   };
@@ -101,8 +96,7 @@ function apiFacade() {
       user: username,
       review: review,
       movieID: imdbID,
-      id: ID
-
+      id: ID,
     });
     return fetch(URLS.DeleteReview(), options).then(handleHttpErrors);
   };
@@ -131,31 +125,27 @@ function apiFacade() {
       });
   };
 
-  const editUser = (user, gender,
-    birthday) => {
-    const options = makeOptions("PUT", false, {
+  const editUser = (user, gender, birthday) => {
+    const options = makeOptions("PUT", true, {
       username: user,
       gender: gender,
-      birthday: birthday
+      birthday: birthday,
     });
-    return fetch(URLS.EditUser(), options)
-    .then(handleHttpErrors);
-  }
+    return fetch(URLS.EditUser(), options).then(handleHttpErrors);
+  };
 
-  const deleteUser = (user, gender,
-    birthday) => {
-      const options = makeOptions("DELETE", false, {
-        username: user,
-        gender: gender,
-        birthday: birthday
-      });
-      return fetch(URLS.DeleteUser(), options)
-      .then(handleHttpErrors);
-  }
+  const deleteUser = (user, gender, birthday) => {
+    const options = makeOptions("DELETE", true, {
+      username: user,
+      gender: gender,
+      birthday: birthday,
+    });
+    return fetch(URLS.DeleteUser(), options).then(handleHttpErrors);
+  };
 
   const getMovieTrailer = (title, apiKey) => {
     return fetch(URLS.MovieTrailer(title, apiKey)).then(handleHttpErrors);
-  }
+  };
 
   const makeOptions = (method, addToken, body) => {
     var opts = {
@@ -190,7 +180,7 @@ function apiFacade() {
     registerUser,
     editUser,
     deleteUser,
-    getMovieTrailer
+    getMovieTrailer,
   };
 }
 const facade = apiFacade();
