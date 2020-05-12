@@ -5,6 +5,7 @@ import facade from "./apiFacade";
 export function Signup({ setLoginStatus, setUsername, setRoles }) {
   const [show, setShow] = useState(false);
   const [isBlocking, setIsBlocking] = useState(false);
+  const [catchError, setCatchError] = useState();
   const [username, setUsernameSignupField] = useState();
   const [password, setPassword] = useState();
   const [gender, setGender] = useState();
@@ -12,7 +13,9 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
 
   const handleClose = () => {
     if (isBlocking) {
-      alert("Are you sure you want to close?");
+      if (catchError === undefined) {
+        alert("Are you sure you want to close?");
+      }
       setIsBlocking(false);
     } else {
       setShow(false);
@@ -30,7 +33,6 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
       gender !== undefined &&
       birthday !== undefined
     ) {
-      handleClose();
       facade
         .registerUser(
           username,
@@ -40,20 +42,19 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
           setUsername,
           setRoles
         )
-        .then((res) => {
+        .then(() => {
           setLoginStatus(true);
-        });
-      flushData();
+        },
+          (rejected) => {
+            if (rejected.status) {
+              rejected.fullError.then((error) => setCatchError(error.message));
+            }
+          }
+        );
     } else {
       alert("Fill in all the information, please");
       setIsBlocking(true);
     }
-  };
-  const flushData = () => {
-    setUsernameSignupField(undefined);
-    setPassword(undefined);
-    setGender(undefined);
-    setBirthday(undefined);
   };
 
   return (
@@ -87,12 +88,13 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
               setBirthday={setBirthday}
               setIsBlocking={setIsBlocking}
             />
+            {catchError !== undefined && <ShowErrorMsg catchError={catchError} setIsBlocking={setIsBlocking} />}
           </Modal.Body>
           <Modal.Footer>
             <input
               type="submit"
               value="Sign Up"
-              onClick={() => setIsBlocking(false)}
+            // onClick={() => setIsBlocking(false)}
             />
           </Modal.Footer>
         </form>
@@ -199,4 +201,10 @@ function BirtdaySelection({ setBirthday, setIsBlocking }) {
       />
     </>
   );
+}
+
+
+function ShowErrorMsg({ catchError, setIsBlocking }) {
+  setIsBlocking(true);
+  return <p className="errorMsg"><b>{catchError}</b></p>;
 }

@@ -4,15 +4,17 @@ import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
 
 export function EditUser({ username, gender, birthday, setUserData }) {
+    const [catchError, setCatchError] = useState();
     const [show, setShow] = useState(false);
     const [isBlocking, setIsBlocking] = useState(false);
-    //const [newUsername, setNewUsername] = useState();
     const [newGender, setNewGender] = useState();
     const [newBirthday, setNewBirthday] = useState();
 
     const handleClose = () => {
         if (isBlocking) {
-            alert("Are you sure you want to close?");
+            if (catchError === undefined) {
+                alert("Are you sure you want to close?");
+            }
             setIsBlocking(false);
         } else {
             setShow(false);
@@ -21,7 +23,14 @@ export function EditUser({ username, gender, birthday, setUserData }) {
     const handleShow = () => setShow(true);
     const handleSubmit = (event) => {
         event.preventDefault();
-        facade.editUser(username, newGender, newBirthday).then((data) => setUserData(data));
+        facade.editUser(username, newGender, newBirthday)
+            .then((data) => setUserData(data),
+                (rejected) => {
+                    if (rejected.status) {
+                        rejected.fullError.then((error) => setCatchError(error.message));
+                    }
+                }
+            );
         handleClose();
     };
 
@@ -36,15 +45,6 @@ export function EditUser({ username, gender, birthday, setUserData }) {
                 </Modal.Header>
                 <form onSubmit={handleSubmit}>
                     <Modal.Body>
-                        {/* <p>Username:</p>
-                        <input
-                            type="text" defaultValue={username}
-                            onChange={(event) => {
-                                setIsBlocking(event.target.value.length > 0);
-                                setNewUsername(event.target.value);
-                            }}
-                        /> */}
-                        <br />
                         <p>Gender:</p>
                         <fieldset
                             onChange={(event) => {
@@ -68,6 +68,7 @@ export function EditUser({ username, gender, birthday, setUserData }) {
                                 setNewBirthday(event.target.value);
                             }}
                         />
+                        {catchError !== undefined && <ShowErrorMsg catchError={catchError} setIsBlocking={setIsBlocking} />}
                     </Modal.Body>
                     <Modal.Footer>
                         <input
@@ -80,4 +81,9 @@ export function EditUser({ username, gender, birthday, setUserData }) {
             </Modal>
         </>
     );
+}
+
+function ShowErrorMsg({ catchError, setIsBlocking }) {
+    setIsBlocking(true);
+    return <p className="errorMsg"><b>{catchError}</b></p>;
 }
