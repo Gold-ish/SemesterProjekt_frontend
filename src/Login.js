@@ -9,6 +9,7 @@ export function Login({
   setUsername,
   setRoles,
 }) {
+  const [catchError, setCatchError] = useState();
   const logout = () => {
     facade.logout();
     setLoginStatus(false);
@@ -16,9 +17,15 @@ export function Login({
     setRoles("");
   };
   const login = (user, pass) => {
-    facade.login(user, pass, setUsername, setRoles).then((res) => {
+    facade.login(user, pass, setUsername, setRoles).then(() => {
       setLoginStatus(true);
-    });
+    },
+      (rejected) => {
+        if (rejected.status) {
+          rejected.fullError.then((error) => setCatchError(error.message));
+        }
+      }
+    );
   };
   return (
     <div>
@@ -29,15 +36,16 @@ export function Login({
           setLoginStatus={setLoginStatus}
           setUsername={setUsername}
           setRoles={setRoles}
+          catchError={catchError}
         />
       ) : (
-        <LoggedIn logout={logout} loginMsg={loginMsg} />
-      )}
+          <LoggedIn logout={logout} loginMsg={loginMsg} />
+        )}
     </div>
   );
 }
 
-function LogIn({ login, loginMsg, setLoginStatus, setUsername, setRoles }) {
+function LogIn({ login, loginMsg, setLoginStatus, setUsername, setRoles, catchError }) {
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
   const performLogin = (evt) => {
@@ -60,16 +68,17 @@ function LogIn({ login, loginMsg, setLoginStatus, setUsername, setRoles }) {
         <button onClick={performLogin} style={{ width: 115 }}>
           Login
         </button>
-        <br />
-        <p>
-          Don't have a user?{" "}
-          <Signup
-            setLoginStatus={setLoginStatus}
-            setUsername={setUsername}
-            setRoles={setRoles}
-          />
-        </p>
       </form>
+      <p>
+        Don't have a user?{" "}
+        <Signup
+          setLoginStatus={setLoginStatus}
+          setUsername={setUsername}
+          setRoles={setRoles}
+        />
+      </p>
+
+      {catchError !== undefined && <p className="errorMsg"><b>{catchError}</b></p>}
     </div>
   );
 }

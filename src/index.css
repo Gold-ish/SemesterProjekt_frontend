@@ -82,6 +82,26 @@ td {
 	text-align: left;
 	padding: 8px;
 }
+  
+  thead button {
+	border: 0;
+	border-radius: none;
+	font-family: inherit;
+	font-weight: 700;
+	font-size: inherit;
+	padding: 0.5em;
+	margin-bottom: 1px;
+  }
+  
+  thead button.ascending::after {
+	content: '↓';
+	display: inline;
+  }
+  
+  thead button.descending::after {
+	content: '↑';
+	display: inline;
+  }
 
 /* tr:nth-child(odd) {
   background-color: #8fbc8f;
