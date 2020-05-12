@@ -7,7 +7,7 @@ import Pagination from "./Pagination";
 export function SearchPage({ searchString }) {
   const [movieList, setMovieList] = useState();
   const [totalResult, setTotalResult] = useState(0);
-  const [catchError, setCatchError] = useState("");
+  const [catchError, setCatchError] = useState();
   const [page, setPage] = useState(1);
 
   function changePage(pageNumber) {

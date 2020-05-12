@@ -40,13 +40,20 @@ function UserFetch({ isLoggedIn, setLoginStatus }) {
 }
 
 function UserStats({ username, birthday, gender, setUserData, isLoggedIn, setLoginStatus }) {
+  const [catchError, setCatchError] = useState();
   let history = useHistory();
   const deleteUser = () => {
     alert("Are you sure you would like to delete this user?");
     facade.deleteUser(username, gender, birthday).then(() => {
       setLoginStatus(!isLoggedIn);
       history.push("/login-out");
-    });
+    },
+      (rejected) => {
+        if (rejected.status) {
+          rejected.fullError.then((error) => setCatchError(error.message));
+        }
+      }
+    );
   }
 
   return (
@@ -78,6 +85,7 @@ function UserStats({ username, birthday, gender, setUserData, isLoggedIn, setLog
       <Button onClick={deleteUser}>
         Delete user
         </Button>
+        {catchError !== undefined && <p className="errorMsg"><b>{catchError}</b></p>}
       {/* 
       INSERT USER PICTURE OR DEFAULT PIC THING.
       Let them stand side by side with the table info
