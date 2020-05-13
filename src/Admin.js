@@ -7,6 +7,7 @@ export function Admin() {
 		<div>
 			{AdminFetch()}
 			{Fetching()}
+			{AdminCriticCode()}
 		</div>
 	);
 }
@@ -38,4 +39,26 @@ function Fetching() {
 		});
 	}, []);
 	return <p>{dataFromServer}</p>;
+}
+
+function ClickHandler() {
+	const [criticCode, setCriticCode] = useState("Loading...");
+
+	useEffect(() => {
+		facade.fetchData(URLS.CriticCode()).then((data) => {
+			setCriticCode(data.code);
+			console.log("returnData:   ", data.code);
+		});
+	}, []);
+	console.log("criticcode: ", criticCode);
+	return <p>{criticCode}</p>;
+}
+
+function AdminCriticCode() {
+	return (
+		<div>
+			<h3>Create speciel critic code</h3>
+			<button onClick={ClickHandler()}>Get Critic Code</button>
+		</div>
+	);
 }

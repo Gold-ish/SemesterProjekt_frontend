@@ -147,8 +147,12 @@ function apiFacade() {
 		return fetch(URLS.MovieTrailer(title, apiKey)).then(handleHttpErrors);
 	};
 
-	const TopTenMovies = () => {
+	const topTenMovies = () => {
 		return fetch(URLS.TopTenMovies()).then(handleHttpErrors);
+	};
+
+	const criticCode = () => {
+		return fetch(URLS.CriticCode()).then(handleHttpErrors);
 	};
 
 	const makeOptions = (method, addToken, body) => {
@@ -185,7 +189,8 @@ function apiFacade() {
 		editUser,
 		deleteUser,
 		getMovieTrailer,
-		TopTenMovies,
+		topTenMovies,
+		criticCode,
 	};
 }
 const facade = apiFacade();
