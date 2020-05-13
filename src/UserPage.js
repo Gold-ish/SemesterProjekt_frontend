@@ -6,16 +6,16 @@ import facade from "./apiFacade";
 import URLS from "./Settings";
 import star from "./Yellow_star.svg";
 
-export function UserPage({ isLoggedIn, setLoginStatus }) {
+export function UserPage({ isLoggedIn, setLoginStatus, roles }) {
   return (
     <div>
       <br />
-      {UserFetch({ isLoggedIn, setLoginStatus })}
+      {UserFetch({ isLoggedIn, setLoginStatus, roles })}
     </div>
   );
 }
 
-function UserFetch({ isLoggedIn, setLoginStatus }) {
+function UserFetch({ isLoggedIn, setLoginStatus, roles }) {
   const [userData, setUserData] = useState("Loading...");
 
   useEffect(() => {
@@ -30,6 +30,7 @@ function UserFetch({ isLoggedIn, setLoginStatus }) {
         username={username}
         birthday={birthday}
         gender={gender}
+        roles={roles}
         setUserData={setUserData}
         isLoggedIn={isLoggedIn}
         setLoginStatus={setLoginStatus}
@@ -39,7 +40,7 @@ function UserFetch({ isLoggedIn, setLoginStatus }) {
   );
 }
 
-function UserStats({ username, birthday, gender, setUserData, isLoggedIn, setLoginStatus }) {
+function UserStats({ username, birthday, gender, roles, setUserData, isLoggedIn, setLoginStatus }) {
   const [catchError, setCatchError] = useState();
   let history = useHistory();
   const deleteUser = () => {
@@ -78,6 +79,12 @@ function UserStats({ username, birthday, gender, setUserData, isLoggedIn, setLog
               <p>Gender:</p>
             </th>
             <td>{gender}</td>
+          </tr>
+          <tr>
+            <th>
+              <p>Roles:</p>
+            </th>
+            <td>{roles}</td>
           </tr>
         </thead>
       </table>

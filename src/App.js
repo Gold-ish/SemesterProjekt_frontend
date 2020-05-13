@@ -42,7 +42,8 @@ export default function App() {
 					</Route>
 					<Route exact path="/user">
 						<UserPage isLoggedIn={isLoggedIn}
-							setLoginStatus={setLoginStatus} />
+							setLoginStatus={setLoginStatus}
+							roles={roles} />
 					</Route>
 					<Route exact path="/admin">
 						<Admin />
