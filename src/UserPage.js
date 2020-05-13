@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { EditUser } from './EditUser';
+import { EditUser } from "./EditUser";
 import Button from "react-bootstrap/Button";
 import facade from "./apiFacade";
 import URLS from "./Settings";
@@ -40,22 +40,31 @@ function UserFetch({ isLoggedIn, setLoginStatus, roles }) {
   );
 }
 
-function UserStats({ username, birthday, gender, roles, setUserData, isLoggedIn, setLoginStatus }) {
+function UserStats({
+  username,
+  birthday,
+  gender,
+  roles,
+  setUserData,
+  isLoggedIn,
+  setLoginStatus,
+}) {
   const [catchError, setCatchError] = useState();
   let history = useHistory();
   const deleteUser = () => {
     alert("Are you sure you would like to delete this user?");
-    facade.deleteUser(username, gender, birthday).then(() => {
-      setLoginStatus(!isLoggedIn);
-      history.push("/login-out");
-    },
+    facade.deleteUser(username, gender, birthday).then(
+      () => {
+        setLoginStatus(!isLoggedIn);
+        history.push("/login-out");
+      },
       (rejected) => {
         if (rejected.status) {
           rejected.fullError.then((error) => setCatchError(error.message));
         }
       }
     );
-  }
+  };
 
   return (
     <div>
@@ -88,11 +97,18 @@ function UserStats({ username, birthday, gender, roles, setUserData, isLoggedIn,
           </tr>
         </thead>
       </table>
-      <EditUser username={username} gender={gender} birthday={birthday} setUserData={setUserData} />
-      <Button onClick={deleteUser}>
-        Delete user
-        </Button>
-        {catchError !== undefined && <p className="errorMsg"><b>{catchError}</b></p>}
+      <EditUser
+        username={username}
+        gender={gender}
+        birthday={birthday}
+        setUserData={setUserData}
+      />
+      <Button onClick={deleteUser}>Delete user</Button>
+      {catchError !== undefined && (
+        <p className="errorMsg">
+          <b>{catchError}</b>
+        </p>
+      )}
       {/* 
       INSERT USER PICTURE OR DEFAULT PIC THING.
       Let them stand side by side with the table info
@@ -114,7 +130,7 @@ function UserReviewRating({ reviews, ratings }) {
 function ShowReviews(reviewArray, ratingArray) {
   let history = useHistory();
   const getRating = (movieId) => {
-    return ratingArray.find(x => x.movieID === movieId).rating;
+    return ratingArray.find((x) => x.movieID === movieId).rating;
   };
 
   return (
@@ -123,21 +139,23 @@ function ShowReviews(reviewArray, ratingArray) {
       {reviewArray.length !== 0 ? (
         <div className="flex-container baseline">
           {reviewArray.map((element) => (
-            <div className="reviewCard clickable" key={element.id} onClick={() => history.push("/moviepage/" + element.movieID)}>
+            <div
+              className="reviewCard clickable"
+              key={element.id}
+              onClick={() => history.push("/moviepage/" + element.movieID)}
+            >
               <h5>{FetchMovie(element.movieID)}</h5>
-              <p>{getRating(element.movieID)}/10
-												<img
-                  src={star}
-                  className="ratingStarTable"
-                  alt="star"
-                /></p>
+              <p>
+                {getRating(element.movieID)}/10
+                <img src={star} className="ratingStarTable" alt="star" />
+              </p>
               <p>{element.review}</p>
             </div>
           ))}
         </div>
       ) : (
-          <h5>Search for a movie and leave your first review!</h5>
-        )}
+        <h5>Search for a movie and leave your first review!</h5>
+      )}
     </>
   );
 }
@@ -152,7 +170,7 @@ function FetchMovie(movieId) {
         setMovieTitle(movie.Title);
       }
     });
-    return () => shouldFetch = false;
+    return () => (shouldFetch = false);
   }, [movieId]);
 
   return movieTitle;

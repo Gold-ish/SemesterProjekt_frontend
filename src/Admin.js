@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import facade from "./apiFacade";
 import URLS from "./Settings";
 
-export function Admin() {
+export function Admin({ isLoggedIn, setLoginStatus }) {
 	return (
 		<div>
-			{AdminFetch()}
-			{Fetching()}
+			<br />
+			{AdminFetch({ isLoggedIn, setLoginStatus })}
+			{AdminCriticCode()}
 		</div>
 	);
 }
 
-function AdminFetch() {
+function AdminFetch({ isLoggedIn, setLoginStatus }) {
 	const [dataFromServer, setDataFromServer] = useState("Loading...");
+
 	useEffect(() => {
 		facade.fetchData(URLS.Admin()).then((data) => setDataFromServer(data.msg));
 	}, []);
@@ -24,18 +26,20 @@ function AdminFetch() {
 	);
 }
 
-function Fetching() {
-	const [dataFromServer, setDataFromServer] = useState("Loading...");
-	useEffect(() => {
-		facade.fetchData(URLS.AdminData()).then((data) => {
-			let returnData = "";
-			for (let key in data) {
-				returnData += key + ": " + data[key] + " \n";
-				console.log(key, data[key]);
-			}
-			setDataFromServer(returnData);
-			console.log(returnData);
+function AdminCriticCode() {
+	const [criticCode, setCriticCode] = useState();
+
+	const clickhandler = () => {
+		facade.fetchData(URLS.CriticCode()).then((data) => {
+			setCriticCode(data.code);
 		});
-	}, []);
-	return <p>{dataFromServer}</p>;
+	};
+
+	return (
+		<div>
+			<h3>Create speciel critic code</h3>
+			<button onClick={clickhandler}>Get Critic Code</button>
+			<p>{criticCode}</p>
+		</div>
+	);
 }

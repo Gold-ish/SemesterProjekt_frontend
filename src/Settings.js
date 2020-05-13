@@ -98,6 +98,11 @@ function URLS() {
 		return URL;
 	}
 
+	function CriticCode() {
+		const URL = "https://carolinehoeg.com/semesterprojekt/api/info/critic/code";
+		return URL;
+	}
+
 	return {
 		Login,
 		User,
@@ -116,6 +121,7 @@ function URLS() {
 		DeleteUser,
 		MovieTrailer,
 		TopTenMovies,
+		CriticCode,
 	};
 }
 export default new URLS();

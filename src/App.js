@@ -10,13 +10,13 @@ import { MoviePage } from "./Moviepage";
 import "./App.css";
 
 export default function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const setLoginStatus = (status) => {
-		setIsLoggedIn(status);
-	};
-	const [username, setUsername] = useState();
-	const [roles, setRoles] = useState();
-	const [searchResult, setSearchResult] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const setLoginStatus = (status) => {
+    setIsLoggedIn(status);
+  };
+  const [username, setUsername] = useState();
+  const [roles, setRoles] = useState();
+  const [searchResult, setSearchResult] = useState("");
 
 	return (
 		<Router>
@@ -67,9 +67,9 @@ export default function App() {
 }
 
 function NoMatch() {
-	return (
-		<div>
-			<h2>Path does not exist</h2>
-		</div>
-	);
+  return (
+    <div>
+      <h2>Path does not exist</h2>
+    </div>
+  );
 }
