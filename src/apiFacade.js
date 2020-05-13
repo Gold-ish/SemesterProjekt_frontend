@@ -106,6 +106,7 @@ function apiFacade() {
 		password,
 		gender,
 		birthday,
+		critic,
 		setUsername,
 		setRoles
 	) => {
@@ -114,6 +115,7 @@ function apiFacade() {
 			password: password,
 			gender: gender,
 			birthday: birthday,
+			role: critic
 		});
 		return fetch(URLS.Register(), options)
 			.then(handleHttpErrors)
@@ -126,7 +128,7 @@ function apiFacade() {
 	};
 
 	const editUser = (user, gender, birthday) => {
-		const options = makeOptions("PUT", false, {
+		const options = makeOptions("PUT", true, {
 			username: user,
 			gender: gender,
 			birthday: birthday,
@@ -135,7 +137,7 @@ function apiFacade() {
 	};
 
 	const deleteUser = (user, gender, birthday) => {
-		const options = makeOptions("DELETE", false, {
+		const options = makeOptions("DELETE", true, {
 			username: user,
 			gender: gender,
 			birthday: birthday,

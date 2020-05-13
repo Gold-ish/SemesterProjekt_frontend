@@ -60,17 +60,17 @@ export function Header({
 				</InputGroup>
 			</li>
 
-			
+
 
 			<li className="right">
 				<NavLink activeClassName="active" to="/login-out">
 					{loginMsg}
 				</NavLink>
 			</li>
-			
+
 			{isLoggedIn && (
 				<React.Fragment>
-					{roles.includes("user") && (
+					{(roles.includes("user") || roles.includes("critic")) && (
 						<li className="right">
 							<NavLink activeClassName="active" to="/user">
 								{username}

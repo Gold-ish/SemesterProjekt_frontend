@@ -10,6 +10,7 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
   const [password, setPassword] = useState();
   const [gender, setGender] = useState();
   const [birthday, setBirthday] = useState();
+  const [critic, setCritic] = useState();
 
   const handleClose = () => {
     if (isBlocking) {
@@ -39,6 +40,7 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
           password,
           gender,
           birthday,
+          critic,
           setUsername,
           setRoles
         )
@@ -78,6 +80,13 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
               setPassword={setPassword}
               setIsBlocking={setIsBlocking}
             />
+
+            <p>Critic code:</p>
+            <input type="text" onChange={(event) => {
+              setIsBlocking(event.target.value.length > 0);
+              setCritic(event.target.value);
+            }} />
+            <br /><br />
 
             <GenderSelection
               setGender={setGender}
@@ -165,6 +174,23 @@ function PasswordSelection({ setPassword, setIsBlocking }) {
     </>
   );
 }
+
+// function CriticSelection({ setCritic, setIsBlocking }) {
+//   const [showCodeInput, setShowCodeInput] = useState(false);
+
+//   return (
+//     <>
+//       <p className="link clickable" onClick={setShowCodeInput(true)}>Are you a certified critic? Click here!</p>
+//       {showCodeInput === true && <>
+//         <p>Critic code:</p>
+//         <input type="text" onChange={(event) => {
+//           setIsBlocking(event.target.value.length > 0);
+//           setCritic(event.target.value);
+//         }} />
+//       </>}
+//     </>
+//   );
+// }
 
 function GenderSelection({ setGender, setIsBlocking }) {
   return (
