@@ -93,8 +93,7 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
   return (
     <>
       <div className="review">
-        {username !== undefined && ownReview.reviewid === undefined && <RatingReviewModal imdbID={imdbID} username={username} setMovie={setMovie}/>}
-        {username !== undefined && ownReview.reviewid !== undefined && <EditRatingReviewModal
+        {username !== undefined && <RatingReviewModal
           imdbID={imdbID}
           username={username}
           reviewProp={ownReview.review}
@@ -112,10 +111,10 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
         <div className="flex-container baseline">
           {MoveOwnReviewToFirstPosition(reviewArray.map((element) => (
             <div className="reviewCard" key={element.id}>
-              <p key={element.user}>
+              <div key={element.user}>
                 {element.user !== undefined ? <h4><b>{element.user}</b></h4> : <b>-Anonymous-</b>}
-                {element.role === "critic" && <p>Verified Critic <img src={verified} className="verified" alt="star"/></p>}
-              </p>
+                {element.role === "critic" && <p>Verified Critic <img src={verified} className="verified" alt="star" /></p>}
+              </div>
               {getRating(element.user)}/10
               <img
                 src={star}
@@ -133,68 +132,8 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
   );
 }
 
-function RatingReviewModal({ imdbID, username, setMovie }) {
-  const [show, setShow] = useState(false);
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState();
-  const [isBlocking, setIsBlocking] = useState(false);
 
-  const handleClose = () => {
-    if (isBlocking) {
-      alert("Are you sure you want to discard your review?");
-      setIsBlocking(false);
-    } else {
-      setShow(false);
-    }
-  };
-  const handleShow = () => setShow(true);
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    facade.addRating(imdbID, rating, username);
-    facade.addReview(imdbID, review, username);
-    handleClose();
-    facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
-      setMovie(data);
-    });
-  };
-
-  return (
-    <>
-      <Button onClick={handleShow} className="right">
-        Add Rating and Review
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Rating and Review</Modal.Title>
-        </Modal.Header>
-        <form onSubmit={handleSubmit}>
-          <Modal.Body>
-            <Stars setIsBlocking={setIsBlocking} setRating={setRating} />
-            <br /> <br />
-            <h5>Add you review: </h5>
-            <textarea
-              className="reviewInput"
-              onChange={(event) => {
-                setIsBlocking(event.target.value.length > 0);
-                setReview(event.target.value);
-              }}
-            ></textarea>
-          </Modal.Body>
-          <Modal.Footer>
-            <input
-              type="submit"
-              value="Save"
-              onClick={() => setIsBlocking(false)}
-            />
-          </Modal.Footer>
-        </form>
-      </Modal>
-    </>
-  );
-}
-
-function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, reviewID, ratingID, setMovie }) {
+function RatingReviewModal({ imdbID, username, reviewProp, ratingProp, reviewID, ratingID, setMovie }) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(ratingProp);
   const [review, setReview] = useState(reviewProp);
@@ -210,10 +149,12 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, revie
     }
   };
   const handleShow = () => setShow(true);
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (buttonPress === "edit") {
+    if (buttonPress === "add") {
+      facade.addRating(imdbID, rating, username);
+      facade.addReview(imdbID, review, username);
+    } else if (buttonPress === "edit") {
       facade.editRating(imdbID, rating, username, ratingID);
       facade.editReview(imdbID, review, username, reviewID);
     } else if (buttonPress === "delete") {
@@ -226,15 +167,59 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, revie
     });
   };
 
+  function showCorrectSubmitButton() {
+    if (reviewProp === undefined) {
+      return (
+        <input
+          type="submit"
+          value="Save"
+          onClick={() => {
+            setButtonPress("add");
+            setIsBlocking(false);
+          }}
+        />);
+    } else if (reviewProp !== undefined) {
+      return (
+        <>
+          <input
+            name="delete"
+            type="submit"
+            value="delete"
+            onClick={() => {
+              setButtonPress("delete");
+              setIsBlocking(false);
+            }}
+          />
+          <input
+            name="edit"
+            type="submit"
+            value="edit"
+            onClick={() => {
+              setButtonPress("edit");
+              setIsBlocking(false);
+            }}
+          />
+        </>);
+    }
+  }
+
+  const modalTitle = () => {
+    if (reviewProp === undefined) {
+      return "Add Rating and Review";
+    } else if (reviewProp !== undefined) {
+      return "Edit Rating and Review";
+    }
+  }
+
   return (
     <>
       <Button onClick={handleShow} className="right">
-        Edit Rating and Review
+        {modalTitle()}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Rating and Review</Modal.Title>
+          <Modal.Title>{modalTitle()}</Modal.Title>
         </Modal.Header>
         <form onSubmit={handleSubmit}>
           <Modal.Body>
@@ -250,24 +235,7 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, revie
             >{review}</textarea>
           </Modal.Body>
           <Modal.Footer>
-            <input
-              name="delete"
-              type="submit"
-              value="delete"
-              onClick={() => {
-                setButtonPress("delete")
-                setIsBlocking(false)
-              }}
-            />
-            <input
-              name="edit"
-              type="submit"
-              value="edit"
-              onClick={() => {
-                setButtonPress("edit")
-                setIsBlocking(false)
-              }}
-            />
+            {showCorrectSubmitButton()}
           </Modal.Footer>
         </form>
       </Modal>
@@ -284,7 +252,7 @@ function Stars({ setIsBlocking, setRating, rating }) {
         setRating(event.target.value);
         console.log(event.target.value);
         setIsBlocking(true);
-      }} 
+      }}
     >
       <input type="radio" id="star10" name="rating" value="10" />
       <label className="full" htmlFor="star10"></label>
