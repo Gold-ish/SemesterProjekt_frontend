@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import facade from "../apiFacade";
 import URLs from "../Settings";
 import star from "../styles/pictures/Yellow_star.svg";
+import verified from "../styles/pictures/verified.svg"
 import { apiKey } from '../Secret';
 
 export function MoviePage({ username }) {
@@ -65,8 +66,8 @@ export function MoviePage({ username }) {
 function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
   let ownReview = { reviewid: undefined, ratingid: undefined, review: undefined, rating: undefined }
 
-  let idididi = reviewArray.find(x => x.user === username);
-  if (idididi !== undefined) { ownReview.reviewid = idididi.id }
+  let idreview = reviewArray.find(x => x.user === username);
+  if (idreview !== undefined) { ownReview.reviewid = idreview.id }
   let reviewtext = reviewArray.find(x => x.user === username);
   if (reviewtext !== undefined) { ownReview.review = reviewtext.review }
   let idrating = ratingArray.find(x => x.user === username);
@@ -112,7 +113,8 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
           {MoveOwnReviewToFirstPosition(reviewArray.map((element) => (
             <div className="reviewCard" key={element.id}>
               <p key={element.user}>
-                {element.user !== undefined ? <b>{element.user}</b> : <b>-Anonymous-</b>}
+                {element.user !== undefined ? <h4><b>{element.user}</b></h4> : <b>-Anonymous-</b>}
+                {element.role === "critic" && <p>Verified Critic <img src={verified} className="verified" alt="star"/></p>}
               </p>
               {getRating(element.user)}/10
               <img

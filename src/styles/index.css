@@ -144,6 +144,10 @@ label {
 	height: 20px;
 }
 
+.verified {
+	height: 20px;
+}
+
 .ratingStarTable {
 	height: 35px;
 }
