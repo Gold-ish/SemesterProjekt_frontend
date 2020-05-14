@@ -24,9 +24,9 @@ export function MoviePage({ username }) {
     return () => shouldFetch = false;
   }, [imdbID]);
 
-  const showAvgRating = (movie) => {
-    if (movie.avgRating !== -1) {
-      return movie.avgRating;
+  const showAvgRating = (rating) => {
+    if (rating !== -1) {
+      return rating;
     } else {
       return "TBD";
     }
@@ -45,9 +45,11 @@ export function MoviePage({ username }) {
       <br />
       <div className="moviescore">
         <h5>
-          Average rating: {showAvgRating(movie)}
+          Average rating by users: {showAvgRating(movie.avgRating)}
           <img src={star} className="ratingStar" alt="star" />
         </h5>
+        <h5>Average rating by critics: {showAvgRating(movie.avgRatingCritic)}
+          <img src={star} className="ratingStar" alt="star" /></h5>
       </div>
       <div className="movieplot">{movie.Plot}</div>
       <div className="movietrailer">
