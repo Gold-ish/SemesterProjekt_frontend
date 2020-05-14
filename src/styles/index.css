@@ -7,47 +7,25 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-ul.header {
-	text-align: center;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-ul.header li {
-	float: left;
-}
-
-ul.header li.right {
-	float: right;
-}
-
-ul.header li.search {
-	margin-top: 10px;
-	width: 50%;
-}
-
 .searchform {
-	margin-left: 25%;
-	margin-right: 25%;
+	width: 75%;
+	 margin-left: 15%;
 }
 
-ul.header li a {
+.headerText {
 	display: block;
+	min-width: 100px;
 	color: white;
 	text-align: center;
-	padding: 14px 16px;
 	text-decoration: none;
 }
 
-ul.header li a:hover:not(.active) {
-	background-color: #111;
+.search {
+	width: 70%!important;
 }
 
 .active {
-	background-color: #4caf50;
+	background-color: none;
 }
 
 .searchedMovies {
@@ -102,10 +80,6 @@ td {
 	content: '↑';
 	display: inline;
   }
-
-/* tr:nth-child(odd) {
-  background-color: #8fbc8f;
-} */
 
 .container {
 	display: flex;
@@ -235,4 +209,8 @@ table .movieInfo{
 
 .bold {
   font-weight: bold;
+}
+
+.logo {
+	max-height: 75px;
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import facade from "./apiFacade";
+import facade from "../apiFacade";
 
 export function ShowMovieTrailer({ title, apiKey }) {
     const [trailer, setTrailer] = useState();

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { EditUser } from "./EditUser";
+import { EditUser } from "../components/EditUser";
 import Button from "react-bootstrap/Button";
-import facade from "./apiFacade";
-import URLS from "./Settings";
-import star from "./Yellow_star.svg";
+import facade from "../apiFacade";
+import URLS from "../Settings";
+import star from "../styles/pictures/Yellow_star.svg";
 
 export function UserPage({ isLoggedIn, setLoginStatus, roles }) {
   return (

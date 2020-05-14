@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import facade from "./apiFacade";
+import facade from "../apiFacade";
 
 export function EditUser({ username, gender, birthday, setUserData }) {
     const [catchError, setCatchError] = useState();

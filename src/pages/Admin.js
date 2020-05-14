@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import facade from "./apiFacade";
-import URLS from "./Settings";
+import facade from "../apiFacade";
+import URLS from "../Settings";
 
 export function Admin({ isLoggedIn, setLoginStatus }) {
 	return (
@@ -16,8 +16,12 @@ function AdminFetch({ isLoggedIn, setLoginStatus }) {
 	const [dataFromServer, setDataFromServer] = useState("Loading...");
 
 	useEffect(() => {
-		facade.fetchData(URLS.Admin()).then((data) => setDataFromServer(data.msg));
-	}, []);
+		facade.fetchData(URLS.Admin()).then((data) => {
+			setDataFromServer(data.msg);
+			setLoginStatus(isLoggedIn);
+		});
+	}, [setLoginStatus, isLoggedIn]);
+	
 	return (
 		<div>
 			<h2>Admin</h2>

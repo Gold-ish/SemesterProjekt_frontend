@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import Table from "react-bootstrap/Table";
 import { useHistory } from "react-router-dom";
-import star from "./Yellow_star.svg";
+import star from "../styles/pictures/Yellow_star.svg";
 
 export default function MovieTable(props) {
 	let history = useHistory()

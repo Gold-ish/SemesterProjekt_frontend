@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Signup } from "./Signup";
-import facade from "./apiFacade";
+import { Signup } from "../components/Signup";
+import facade from "../apiFacade";
 
 export function Login({
   isLoggedIn,

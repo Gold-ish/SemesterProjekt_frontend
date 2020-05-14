@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { ShowMovieTrailer } from './ShowMovieTrailer';
+import { ShowMovieTrailer } from '../components/ShowMovieTrailer';
+import InfoTable from '../components/InfoTable';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import facade from "./apiFacade";
-import URLs from "./Settings";
-import star from "./Yellow_star.svg";
-import { apiKey } from './Secret';
+import facade from "../apiFacade";
+import URLs from "../Settings";
+import star from "../styles/pictures/Yellow_star.svg";
+import { apiKey } from '../Secret';
 
 export function MoviePage({ username }) {
   let { imdbID } = useParams();
@@ -55,70 +56,13 @@ export function MoviePage({ username }) {
         <br /><br />
       </div>
       <div className="reviewcontainer">
-        {movie.review !== undefined && ShowReviews(movie.review, movie.rating, imdbID, username)}
+        {movie.review !== undefined && ShowReviews(movie.review, movie.rating, imdbID, username, setMovie)}
       </div>
     </div>
   );
 }
 
-function InfoTable({ movie }) {
-  return (
-    <table className="movieInfo">
-      <thead>
-        <tr>
-          <td className="right bold">Year:</td>
-          <td>{movie.Year}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Rated:</td>
-          <td>{movie.Rated}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Released:</td>
-          <td>{movie.Released}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Runtime:</td>
-          <td>{movie.Runtime}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Genre:</td>
-          <td>{movie.Genre}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Director:</td>
-          <td>{movie.Director}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Actors:</td>
-          <td>{movie.Actors}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Language:</td>
-          <td>{movie.Language}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Awards:</td>
-          <td>{movie.Awards}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Type:</td>
-          <td>{movie.Type}</td>
-        </tr>
-        <tr>
-          <td className="right bold">DVD release:</td>
-          <td>{movie.DVD}</td>
-        </tr>
-        <tr>
-          <td className="right bold">Production:</td>
-          <td>{movie.Production}</td>
-        </tr>
-      </thead>
-    </table>
-  );
-}
-
-function ShowReviews(reviewArray, ratingArray, imdbID, username) {
+function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
   let ownReview = { reviewid: undefined, ratingid: undefined, review: undefined, rating: undefined }
 
   let idididi = reviewArray.find(x => x.user === username);
@@ -148,14 +92,15 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
   return (
     <>
       <div className="review">
-        {username !== undefined && ownReview.reviewid === undefined && <RatingReviewModal imdbID={imdbID} username={username} />}
+        {username !== undefined && ownReview.reviewid === undefined && <RatingReviewModal imdbID={imdbID} username={username} setMovie={setMovie}/>}
         {username !== undefined && ownReview.reviewid !== undefined && <EditRatingReviewModal
           imdbID={imdbID}
           username={username}
           reviewProp={ownReview.review}
           ratingProp={ownReview.rating}
           reviewID={ownReview.reviewid}
-          ratingID={ownReview.ratingid} />
+          ratingID={ownReview.ratingid}
+          setMovie={setMovie} />
 
         }
         {username === undefined && <p className="right blue"><b>Login to make review and rating</b></p>}
@@ -186,7 +131,7 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
   );
 }
 
-function RatingReviewModal({ imdbID, username }) {
+function RatingReviewModal({ imdbID, username, setMovie }) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState();
@@ -206,6 +151,9 @@ function RatingReviewModal({ imdbID, username }) {
     facade.addRating(imdbID, rating, username);
     facade.addReview(imdbID, review, username);
     handleClose();
+    facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
+      setMovie(data);
+    });
   };
 
   return (
@@ -244,7 +192,7 @@ function RatingReviewModal({ imdbID, username }) {
   );
 }
 
-function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, reviewID, ratingID }) {
+function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, reviewID, ratingID, setMovie }) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(ratingProp);
   const [review, setReview] = useState(reviewProp);
@@ -271,6 +219,9 @@ function EditRatingReviewModal({ imdbID, username, reviewProp, ratingProp, revie
       facade.deleteReview(imdbID, review, username, reviewID);
     }
     handleClose();
+    facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
+      setMovie(data);
+    });
   };
 
   return (
@@ -331,7 +282,7 @@ function Stars({ setIsBlocking, setRating, rating }) {
         setRating(event.target.value);
         console.log(event.target.value);
         setIsBlocking(true);
-      }}
+      }} 
     >
       <input type="radio" id="star10" name="rating" value="10" />
       <label className="full" htmlFor="star10"></label>
