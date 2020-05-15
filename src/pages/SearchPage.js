@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import facade from "./apiFacade";
-import URLS from "./Settings";
-import MovieTable from "./MovieTable";
-import Pagination from "./Pagination";
+import facade from "../apiFacade";
+import URLS from "../Settings";
+import MovieTable from "../components/MovieTable";
+import Pagination from "../components/Pagination";
 
 export function SearchPage({ searchString }) {
   const [movieList, setMovieList] = useState();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import facade from "./apiFacade";
+import facade from "../apiFacade";
 
 export function Signup({ setLoginStatus, setUsername, setRoles }) {
   const [show, setShow] = useState(false);
@@ -103,7 +103,6 @@ export function Signup({ setLoginStatus, setUsername, setRoles }) {
             <input
               type="submit"
               value="Sign Up"
-            // onClick={() => setIsBlocking(false)}
             />
           </Modal.Footer>
         </form>
@@ -174,23 +173,6 @@ function PasswordSelection({ setPassword, setIsBlocking }) {
     </>
   );
 }
-
-// function CriticSelection({ setCritic, setIsBlocking }) {
-//   const [showCodeInput, setShowCodeInput] = useState(false);
-
-//   return (
-//     <>
-//       <p className="link clickable" onClick={setShowCodeInput(true)}>Are you a certified critic? Click here!</p>
-//       {showCodeInput === true && <>
-//         <p>Critic code:</p>
-//         <input type="text" onChange={(event) => {
-//           setIsBlocking(event.target.value.length > 0);
-//           setCritic(event.target.value);
-//         }} />
-//       </>}
-//     </>
-//   );
-// }
 
 function GenderSelection({ setGender, setIsBlocking }) {
   return (

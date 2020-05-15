@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import MovieTable from "./MovieTable";
-import facade from "./apiFacade";
-import URLs from "./Settings";
+import MovieTable from "../components/MovieTable";
+import facade from "../apiFacade";
+import URLs from "../Settings";
 
 export function Home() {
 	const [movieList, setMovieList] = useState();

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { ShowMovieTrailer } from "./ShowMovieTrailer";
+import { ShowMovieTrailer } from "../components/ShowMovieTrailer";
+import InfoTable from "../components/InfoTable";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import facade from "./apiFacade";
-import URLs from "./Settings";
-import star from "./Yellow_star.svg";
-import { apiKey } from "./Secret";
-import trash from "./trash-can.svg";
-import { FetchMovie } from "./UserPage";
+import facade from "../apiFacade";
+import URLs from "../Settings";
+import star from "../styles/pictures/Yellow_star.svg";
+import verified from "../styles/pictures/verified.svg";
+import trash from "../styles/pictures/trash-can.svg";
+import { apiKey } from "../Secret";
 
 export function MoviePage({ username }) {
 	let { imdbID } = useParams();
@@ -24,9 +25,9 @@ export function MoviePage({ username }) {
 		return () => (shouldFetch = false);
 	}, [imdbID]);
 
-	const showAvgRating = (movie) => {
-		if (movie.avgRating !== -1) {
-			return movie.avgRating;
+	const showAvgRating = (rating) => {
+		if (rating !== -1) {
+			return rating;
 		} else {
 			return "TBD";
 		}
@@ -45,7 +46,11 @@ export function MoviePage({ username }) {
 			<br />
 			<div className="moviescore">
 				<h5>
-					Average rating: {showAvgRating(movie)}
+					Average rating by users: {showAvgRating(movie.avgRating)}
+					<img src={star} className="ratingStar" alt="star" />
+				</h5>
+				<h5>
+					Average rating by critics: {showAvgRating(movie.avgRatingCritic)}
 					<img src={star} className="ratingStar" alt="star" />
 				</h5>
 			</div>
@@ -61,70 +66,13 @@ export function MoviePage({ username }) {
 			</div>
 			<div className="reviewcontainer">
 				{movie.review !== undefined &&
-					ShowReviews(movie.review, movie.rating, imdbID, username)}
+					ShowReviews(movie.review, movie.rating, imdbID, username, setMovie)}
 			</div>
 		</div>
 	);
 }
 
-function InfoTable({ movie }) {
-	return (
-		<table className="movieInfo">
-			<thead>
-				<tr>
-					<td className="right bold">Year:</td>
-					<td>{movie.Year}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Rated:</td>
-					<td>{movie.Rated}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Released:</td>
-					<td>{movie.Released}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Runtime:</td>
-					<td>{movie.Runtime}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Genre:</td>
-					<td>{movie.Genre}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Director:</td>
-					<td>{movie.Director}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Actors:</td>
-					<td>{movie.Actors}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Language:</td>
-					<td>{movie.Language}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Awards:</td>
-					<td>{movie.Awards}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Type:</td>
-					<td>{movie.Type}</td>
-				</tr>
-				<tr>
-					<td className="right bold">DVD release:</td>
-					<td>{movie.DVD}</td>
-				</tr>
-				<tr>
-					<td className="right bold">Production:</td>
-					<td>{movie.Production}</td>
-				</tr>
-			</thead>
-		</table>
-	);
-}
-
-function ShowReviews(reviewArray, ratingArray, imdbID, username) {
+function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
 	let ownReview = {
 		reviewid: undefined,
 		ratingid: undefined,
@@ -132,9 +80,9 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
 		rating: undefined,
 	};
 
-	let idididi = reviewArray.find((x) => x.user === username);
-	if (idididi !== undefined) {
-		ownReview.reviewid = idididi.id;
+	let idreview = reviewArray.find((x) => x.user === username);
+	if (idreview !== undefined) {
+		ownReview.reviewid = idreview.id;
 	}
 	let reviewtext = reviewArray.find((x) => x.user === username);
 	if (reviewtext !== undefined) {
@@ -174,24 +122,21 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
 		}
 		return array;
 	}
-
 	return (
 		<>
 			<div className="review">
-				{username !== undefined && ownReview.reviewid === undefined && (
-					<RatingReviewModal imdbID={imdbID} username={username} />
-				)}
-				{username !== undefined && ownReview.reviewid !== undefined && (
-					<EditRatingReviewModal
+				{username !== undefined && username !== "admin" && (
+					<RatingReviewModal
 						imdbID={imdbID}
 						username={username}
 						reviewProp={ownReview.review}
 						ratingProp={ownReview.rating}
 						reviewID={ownReview.reviewid}
 						ratingID={ownReview.ratingid}
+						setMovie={setMovie}
 					/>
 				)}
-				{username === undefined && (
+				{(username === undefined || username === "admin") && (
 					<p className="right blue">
 						<b>Login to make review and rating</b>
 					</p>
@@ -203,10 +148,12 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
 					{MoveOwnReviewToFirstPosition(
 						reviewArray.map((element) => (
 							<div className="reviewCard" key={element.id}>
-								<p key={element.user}>
+								<div key={element.user}>
 									{element.user !== undefined ? (
 										<>
-											<b>{element.user}</b>
+											<h4>
+												<b>{element.user}</b>
+											</h4>
 											{username === "admin" && (
 												<img
 													src={trash}
@@ -224,7 +171,13 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
 									) : (
 										<b>-Anonymous-</b>
 									)}
-								</p>
+									{element.role === "critic" && (
+										<p>
+											Verified Critic{" "}
+											<img src={verified} className="verified" alt="star" />
+										</p>
+									)}
+								</div>
 								{getRating(element.user)}/10
 								<img src={star} className="ratingStarTable" alt="star" />
 								<p>{element.review}</p>
@@ -240,71 +193,14 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username) {
 	);
 }
 
-function RatingReviewModal({ imdbID, username }) {
-	const [show, setShow] = useState(false);
-	const [rating, setRating] = useState(0);
-	const [review, setReview] = useState();
-	const [isBlocking, setIsBlocking] = useState(false);
-
-	const handleClose = () => {
-		if (isBlocking) {
-			alert("Are you sure you want to discard your review?");
-			setIsBlocking(false);
-		} else {
-			setShow(false);
-		}
-	};
-	const handleShow = () => setShow(true);
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		facade.addRating(imdbID, rating, username);
-		facade.addReview(imdbID, review, username);
-		handleClose();
-	};
-
-	return (
-		<>
-			<Button onClick={handleShow} className="right">
-				Add Rating and Review
-			</Button>
-
-			<Modal show={show} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Add Rating and Review</Modal.Title>
-				</Modal.Header>
-				<form onSubmit={handleSubmit}>
-					<Modal.Body>
-						<Stars setIsBlocking={setIsBlocking} setRating={setRating} />
-						<br /> <br />
-						<h5>Add you review: </h5>
-						<textarea
-							className="reviewInput"
-							onChange={(event) => {
-								setIsBlocking(event.target.value.length > 0);
-								setReview(event.target.value);
-							}}
-						></textarea>
-					</Modal.Body>
-					<Modal.Footer>
-						<input
-							type="submit"
-							value="Save"
-							onClick={() => setIsBlocking(false)}
-						/>
-					</Modal.Footer>
-				</form>
-			</Modal>
-		</>
-	);
-}
-
-function EditRatingReviewModal({
+function RatingReviewModal({
 	imdbID,
 	username,
 	reviewProp,
 	ratingProp,
 	reviewID,
 	ratingID,
+	setMovie,
 }) {
 	const [show, setShow] = useState(false);
 	const [rating, setRating] = useState(ratingProp);
@@ -321,10 +217,12 @@ function EditRatingReviewModal({
 		}
 	};
 	const handleShow = () => setShow(true);
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		if (buttonPress === "edit") {
+		if (buttonPress === "add") {
+			facade.addRating(imdbID, rating, username);
+			facade.addReview(imdbID, review, username);
+		} else if (buttonPress === "edit") {
 			facade.editRating(imdbID, rating, username, ratingID);
 			facade.editReview(imdbID, review, username, reviewID);
 		} else if (buttonPress === "delete") {
@@ -332,17 +230,66 @@ function EditRatingReviewModal({
 			facade.deleteReview(imdbID, review, username, reviewID);
 		}
 		handleClose();
+		facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
+			setMovie(data);
+		});
+	};
+
+	function showCorrectSubmitButton() {
+		if (reviewProp === undefined) {
+			return (
+				<input
+					type="submit"
+					value="Save"
+					onClick={() => {
+						setButtonPress("add");
+						setIsBlocking(false);
+					}}
+				/>
+			);
+		} else if (reviewProp !== undefined) {
+			return (
+				<>
+					<input
+						name="delete"
+						type="submit"
+						value="delete"
+						onClick={() => {
+							setButtonPress("delete");
+							setIsBlocking(false);
+						}}
+					/>
+					<input
+						name="edit"
+						type="submit"
+						value="edit"
+						onClick={() => {
+							setButtonPress("edit");
+							setIsBlocking(false);
+						}}
+					/>
+				</>
+			);
+		}
+	}
+
+	const modalTitle = () => {
+		if (reviewProp === undefined) {
+			return "Add Rating and Review";
+		} else if (reviewProp !== undefined) {
+			return "Edit Rating and Review";
+		}
 	};
 
 	return (
 		<>
 			<Button onClick={handleShow} className="right">
-				Edit Rating and Review
+				{modalTitle()}
 			</Button>
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Edit Rating and Review</Modal.Title>
+					<Modal.Title>{modalTitle()}</Modal.Title>
 				</Modal.Header>
 				<form onSubmit={handleSubmit}>
 					<Modal.Body>
@@ -352,7 +299,7 @@ function EditRatingReviewModal({
 							rating={rating}
 						/>
 						<br /> <br />
-						<h5>Add you review: </h5>
+						<h5>Add your review: </h5>
 						<textarea
 							className="reviewInput"
 							onChange={(event) => {
@@ -363,26 +310,7 @@ function EditRatingReviewModal({
 							{review}
 						</textarea>
 					</Modal.Body>
-					<Modal.Footer>
-						<input
-							name="delete"
-							type="submit"
-							value="delete"
-							onClick={() => {
-								setButtonPress("delete");
-								setIsBlocking(false);
-							}}
-						/>
-						<input
-							name="edit"
-							type="submit"
-							value="edit"
-							onClick={() => {
-								setButtonPress("edit");
-								setIsBlocking(false);
-							}}
-						/>
-					</Modal.Footer>
+					<Modal.Footer>{showCorrectSubmitButton()}</Modal.Footer>
 				</form>
 			</Modal>
 		</>

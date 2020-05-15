@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Header } from "./Header";
-import { Home } from "./Home";
-import { SearchPage } from "./SearchPage";
-import { Login } from "./Login";
-import { UserPage } from "./UserPage";
-import { Admin } from "./Admin";
-import { MoviePage } from "./Moviepage";
-import "./App.css";
+import { Header } from "./components/Header";
+import { Home } from "./pages/Home";
+import { SearchPage } from "./pages/SearchPage";
+import { Login } from "./pages/Login";
+import { UserPage } from "./pages/UserPage";
+import { Admin } from "./pages/Admin";
+import { MoviePage } from "./pages/Moviepage";
+import "./styles/App.css";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const setLoginStatus = (status) => {
-    setIsLoggedIn(status);
-  };
-  const [username, setUsername] = useState();
-  const [roles, setRoles] = useState();
-  const [searchResult, setSearchResult] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const setLoginStatus = (status) => {
+		setIsLoggedIn(status);
+	};
+	const [username, setUsername] = useState();
+	const [roles, setRoles] = useState();
+	const [searchResult, setSearchResult] = useState("");
 
 	return (
 		<Router>
@@ -46,7 +46,8 @@ export default function App() {
 							roles={roles} />
 					</Route>
 					<Route exact path="/admin">
-						<Admin />
+						<Admin isLoggedIn={isLoggedIn}
+							setLoginStatus={setLoginStatus} />
 					</Route>
 					<Route path="/login-out">
 						<Login
@@ -67,9 +68,9 @@ export default function App() {
 }
 
 function NoMatch() {
-  return (
-    <div>
-      <h2>Path does not exist</h2>
-    </div>
-  );
+	return (
+		<div>
+			<h2>Path does not exist</h2>
+		</div>
+	);
 }
