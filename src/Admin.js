@@ -3,6 +3,13 @@ import facade from "./apiFacade";
 import URLS from "./Settings";
 
 export function Admin({ isLoggedIn, setLoginStatus }) {
+	const [userData, setUserData] = useState("Loading...");
+
+	useEffect(() => {
+		facade.fetchData(URLS.User()).then((data) => setUserData(data));
+	}, []);
+
+	const { reviews, ratings } = userData;
 	return (
 		<div>
 			<br />

@@ -82,8 +82,8 @@ td {
 	text-align: left;
 	padding: 8px;
 }
-  
-  thead button {
+
+thead button {
 	border: 0;
 	border-radius: none;
 	font-family: inherit;
@@ -91,17 +91,17 @@ td {
 	font-size: inherit;
 	padding: 0.5em;
 	margin-bottom: 1px;
-  }
-  
-  thead button.ascending::after {
-	content: '↓';
+}
+
+thead button.ascending::after {
+	content: "↓";
 	display: inline;
-  }
-  
-  thead button.descending::after {
-	content: '↑';
+}
+
+thead button.descending::after {
+	content: "↑";
 	display: inline;
-  }
+}
 
 /* tr:nth-child(odd) {
   background-color: #8fbc8f;
@@ -218,6 +218,7 @@ label {
 	padding: 10px;
 	margin: 20px;
 	min-height: 75px;
+	position: relative;
 }
 
 .right {
@@ -228,11 +229,17 @@ label {
 	padding-right: 20%;
 }
 
-table .movieInfo{
-  border-collapse: collapse;
-  width: 100%;
+table .movieInfo {
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .bold {
-  font-weight: bold;
+	font-weight: bold;
+}
+
+.trashCan {
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
