@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ShowMovieTrailer } from "../components/ShowMovieTrailer";
 import InfoTable from "../components/InfoTable";
+import ShowMoreText from 'react-show-more-text';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import facade from "../apiFacade";
@@ -122,6 +123,11 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
 		}
 		return array;
 	}
+
+	function executeOnClick(isExpanded) {
+        console.log(isExpanded);
+    }
+
 	return (
 		<>
 			<div className="review">
@@ -159,18 +165,22 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
 													src={trash}
 													className="trashCan"
 													alt="trashCan"
-													onClick={() =>
+													onClick={() => {
 														deleteReviewRating(
 															getRatingID(element.user),
 															element.id
-														)
+														);
+														facade.fetchData(URLs.SpecificMovie(imdbID)).then((data) => {
+															setMovie(data);
+														});
+													}
 													}
 												/>
 											)}
 										</>
 									) : (
-										<b>-Anonymous-</b>
-									)}
+											<b>-Anonymous-</b>
+										)}
 									{element.role === "critic" && (
 										<p>
 											Verified Critic{" "}
@@ -180,15 +190,25 @@ function ShowReviews(reviewArray, ratingArray, imdbID, username, setMovie) {
 								</div>
 								{getRating(element.user)}/10
 								<img src={star} className="ratingStarTable" alt="star" />
-								<p>{element.review}</p>
+								<ShowMoreText
+									lines={3}
+									more='Show more'
+									less='Show less'
+									anchorClass=''
+									onClick={executeOnClick(false)}
+									expanded={false}
+									width={280}
+								>
+									<p>{element.review}</p>
+								</ShowMoreText>
 							</div>
 						)),
 						username
 					)}
 				</div>
 			) : (
-				<h5>Be the first one to write a review!</h5>
-			)}
+					<h5>Be the first one to write a review!</h5>
+				)}
 		</>
 	);
 }
