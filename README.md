@@ -31,4 +31,4 @@ https://github.com/Gold-ish/StartCode_CA3_Backend
 
 ## The deployed frontend
 
-- Published to `startcodeca3.surge.sh`
+- Published to `carolinehoeg.surge.sh`
