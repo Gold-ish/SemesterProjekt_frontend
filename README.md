@@ -2,7 +2,7 @@
 
 ## Backend
 This is the backend that is supposed to be used with this Frontend.  
-https://github.com/Gold-ish/StartCode_CA3_Backend
+https://github.com/Gold-ish/SemesterProjekt_backend
 
 ## Getitng started
 - Make a new repository on GitHub.
